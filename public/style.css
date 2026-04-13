@@ -1,0 +1,13 @@
+/* Remove margins and scrollbars */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevents scrollbars from appearing */
+  background-color: black;
+}
+
+canvas {
+  display: block; /* Removes the tiny gap at the bottom of the canvas */
+}

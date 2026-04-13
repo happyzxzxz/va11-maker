@@ -1,0 +1,76 @@
+{
+  "bar_night": {
+    "base": "assets/main/bg/bar_bg.png",
+    "offsets": {"x": 41, "y": 60},
+    "animations": [
+      {
+        "id": "ceiling_fan",
+        "frames": [
+            "assets/main/bg/fan/0001.png",
+            "assets/main/bg/fan/0002.png",
+            "assets/main/bg/fan/0003.png",
+            "assets/main/bg/fan/0004.png",
+            "assets/main/bg/fan/0005.png",
+            "assets/main/bg/fan/0006.png",
+            "assets/main/bg/fan/0007.png",
+            "assets/main/bg/fan/0008.png",
+            "assets/main/bg/fan/0009.png",
+            "assets/main/bg/fan/0010.png",
+            "assets/main/bg/fan/0011.png",
+            "assets/main/bg/fan/0012.png",
+            "assets/main/bg/fan/0013.png",
+            "assets/main/bg/fan/0014.png",
+            "assets/main/bg/fan/0015.png",
+            "assets/main/bg/fan/0016.png",
+            "assets/main/bg/fan/0017.png",
+            "assets/main/bg/fan/0018.png",
+            "assets/main/bg/fan/0019.png",
+            "assets/main/bg/fan/0020.png",
+            "assets/main/bg/fan/0021.png",
+            "assets/main/bg/fan/0022.png",
+            "assets/main/bg/fan/0023.png",
+            "assets/main/bg/fan/0024.png",
+            "assets/main/bg/fan/0025.png",
+            "assets/main/bg/fan/0026.png",
+            "assets/main/bg/fan/0027.png",
+            "assets/main/bg/fan/0028.png",
+            "assets/main/bg/fan/0029.png",
+            "assets/main/bg/fan/0030.png",
+            "assets/main/bg/fan/0031.png",
+            "assets/main/bg/fan/0032.png",
+            "assets/main/bg/fan/0033.png",
+            "assets/main/bg/fan/0034.png",
+            "assets/main/bg/fan/0035.png",
+            "assets/main/bg/fan/0036.png",
+            "assets/main/bg/fan/0037.png",
+            "assets/main/bg/fan/0038.png",
+            "assets/main/bg/fan/0039.png",
+            "assets/main/bg/fan/0040.png",
+            "assets/main/bg/fan/0041.png",
+            "assets/main/bg/fan/0042.png",
+            "assets/main/bg/fan/0043.png",
+            "assets/main/bg/fan/0044.png"
+        ],
+        "x": 368, "y": 90, "speed": 0.4
+      }
+    ],
+    "interactive": [
+      {
+        "id": "tv",
+        "x": 510, "y": 95,
+        "channels": [
+            "assets/main/bg/tv/tv_news.png",
+            "assets/main/bg/tv/for_a_dollar.png",
+            "assets/main/bg/tv/tv_static.png",
+            "assets/main/bg/tv/cool.png",
+            "assets/main/bg/tv/59.png",
+            "assets/main/bg/tv/hassy.png",
+            "assets/main/bg/tv/hero.png",
+            "assets/main/bg/tv/nosignal.png",
+            "assets/main/bg/tv/water.png",
+            "assets/main/bg/tv/wrestling.png"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1060 @@
+{
+  "dorothy": {
+    "displayName": "Dorothy",
+    "nameColor": "#FF2FCB",
+    "baseScale": 2.15,
+    "speechFile": "speechHigh",
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 19, "y": 34 }, "mouth": { "x": 41, "y": 73 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/normal/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/normal/eyes_1.png", "assets/main/chars/dorothy/normal/eyes_2.png", "assets/main/chars/dorothy/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/dorothy/normal/mouth_1.png", "assets/main/chars/dorothy/normal/mouth_2.png", "assets/main/chars/dorothy/normal/mouth_3.png"]
+        }
+      },
+      "angry": {
+        "offsets": { "eyes": { "x": 19, "y": 35 }, "mouth": { "x": 45, "y": 76 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/angry/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/angry/eyes_1.png", "assets/main/chars/dorothy/angry/eyes_2.png", "assets/main/chars/dorothy/angry/eyes_3.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/angry/mouth_1.png",
+           "assets/main/chars/dorothy/angry/mouth_2.png",
+           "assets/main/chars/dorothy/angry/mouth_3.png",
+           "assets/main/chars/dorothy/angry/mouth_4.png",
+           "assets/main/chars/dorothy/angry/mouth_5.png",
+           "assets/main/chars/dorothy/angry/mouth_6.png",
+           "assets/main/chars/dorothy/angry/mouth_7.png"
+          ]
+        }
+      },
+      "smug": {
+        "offsets": { "eyes": { "x": 19, "y": 35 }, "mouth": { "x": 38, "y": 74 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/smug/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/smug/eyes_1.png", "assets/main/chars/dorothy/smug/eyes_2.png", "assets/main/chars/dorothy/smug/eyes_3.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/smug/mouth_1.png",
+           "assets/main/chars/dorothy/smug/mouth_2.png",
+           "assets/main/chars/dorothy/smug/mouth_3.png",
+           "assets/main/chars/dorothy/smug/mouth_4.png",
+           "assets/main/chars/dorothy/smug/mouth_5.png",
+           "assets/main/chars/dorothy/smug/mouth_6.png"
+          ]
+        }
+      },
+      "sad": {
+        "offsets": { "eyes": { "x": 21, "y": 39 }, "mouth": { "x": 38, "y": 75 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/sad/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/sad/eyes_1.png", "assets/main/chars/dorothy/sad/eyes_2.png", "assets/main/chars/dorothy/sad/eyes_3.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/sad/mouth_1.png",
+           "assets/main/chars/dorothy/sad/mouth_2.png",
+           "assets/main/chars/dorothy/sad/mouth_3.png"
+          ]
+        }
+      },
+      "scared": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 41, "y": 74 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/scared/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/scared/dorothy.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/scared/mouth_1.png",
+           "assets/main/chars/dorothy/scared/mouth_2.png",
+           "assets/main/chars/dorothy/scared/mouth_3.png"
+          ]
+        }
+      },
+      "thinking": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 41, "y": 74 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/thinking/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/thinking/dorothy.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/thinking/mouth_1.png",
+           "assets/main/chars/dorothy/thinking/mouth_2.png",
+           "assets/main/chars/dorothy/thinking/mouth_3.png"
+          ]
+        }
+      },
+      "pachi": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 65, "y": 75 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/pachi/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/pachi/dorothy.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/pachi/mouth_1.png",
+           "assets/main/chars/dorothy/pachi/mouth_2.png",
+           "assets/main/chars/dorothy/pachi/mouth_3.png"
+          ]
+        }
+      },
+      "drunk": {
+        "offsets": { "eyes": { "x": 16, "y": 48 }, "mouth": { "x": 37, "y": 77 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/drunk/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/drunk/eyes_1.png", "assets/main/chars/dorothy/drunk/eyes_2.png", "assets/main/chars/dorothy/drunk/eyes_3.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/drunk/mouth_1.png",
+           "assets/main/chars/dorothy/drunk/mouth_2.png",
+           "assets/main/chars/dorothy/drunk/mouth_3.png"
+          ]
+        }
+      },
+      "wah": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 39, "y": 72 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/wah/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/wah/dorothy.png"],
+          "mouth": [
+           "assets/main/chars/dorothy/wah/mouth_1.png",
+           "assets/main/chars/dorothy/wah/mouth_2.png"
+          ]
+        }
+      },
+      "crying": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/crying/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/crying/dorothy.png"],
+          "mouth": [
+            "assets/main/chars/dorothy/crying/dorothy.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/dorothy/crying/dorothy.png",
+            "assets/main/chars/dorothy/crying/dorothy2.png"
+          ],
+          "animSpeed": 0.05,
+          "animInterval": { "min": 50, "max": 50 }
+        }
+      },
+      "heart": {
+        "offsets": { "eyes": { "x": 19, "y": 34 }, "mouth": { "x": 41, "y": 73 } },
+        "sprites": {
+          "body": "assets/main/chars/dorothy/heart/dorothy.png",
+          "eyes": ["assets/main/chars/dorothy/heart/eyes_1.png", "assets/main/chars/dorothy/heart/eyes_2.png", "assets/main/chars/dorothy/heart/eyes_3.png"],
+          "mouth": ["assets/main/chars/dorothy/heart/mouth_1.png", "assets/main/chars/dorothy/heart/mouth_2.png", "assets/main/chars/dorothy/heart/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "gillian": {
+    "displayName": "Gillian",
+    "nameColor": "#6B328A",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 56, "y": 61 }, "mouth": { "x": 71, "y": 83 } },
+        "sprites": {
+          "body": "assets/main/chars/gillian/normal/gillian.png",
+          "eyes": ["assets/main/chars/gillian/normal/eyes_1.png", "assets/main/chars/gillian/normal/eyes_2.png", "assets/main/chars/gillian/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/gillian/normal/mouth_1.png", "assets/main/chars/gillian/normal/mouth_2.png", "assets/main/chars/gillian/normal/mouth_3.png"]
+        }
+      },
+      "surprised": {
+        "offsets": { "eyes": { "x": 49, "y": 50 }, "mouth": { "x": 63, "y": 83 } },
+        "sprites": {
+          "body": "assets/main/chars/gillian/surprised/gillian.png",
+          "eyes": ["assets/main/chars/gillian/surprised/eyes_1.png", "assets/main/chars/gillian/surprised/eyes_2.png", "assets/main/chars/gillian/surprised/eyes_3.png"],
+          "mouth": ["assets/main/chars/gillian/surprised/mouth_1.png", "assets/main/chars/gillian/surprised/mouth_2.png", "assets/main/chars/gillian/surprised/mouth_3.png"]
+        }
+      },
+      "angry": {
+        "offsets": { "eyes": { "x": 56, "y": 52 }, "mouth": { "x": 63, "y": 83 } },
+        "sprites": {
+          "body": "assets/main/chars/gillian/angry/gillian.png",
+          "eyes": ["assets/main/chars/gillian/angry/eyes_1.png", "assets/main/chars/gillian/angry/eyes_2.png", "assets/main/chars/gillian/angry/eyes_3.png"],
+          "mouth": ["assets/main/chars/gillian/angry/mouth_1.png", "assets/main/chars/gillian/angry/mouth_2.png", "assets/main/chars/gillian/angry/mouth_3.png"]
+        }
+      },
+      "eyebrow": {
+        "offsets": { "eyes": { "x": 51, "y": 54 }, "mouth": { "x": 71, "y": 83 } },
+        "sprites": {
+          "body": "assets/main/chars/gillian/eyebrow/gillian.png",
+          "eyes": ["assets/main/chars/gillian/eyebrow/eyes_1.png", "assets/main/chars/gillian/eyebrow/eyes_2.png", "assets/main/chars/gillian/eyebrow/eyes_3.png"],
+          "mouth": ["assets/main/chars/gillian/eyebrow/mouth_1.png", "assets/main/chars/gillian/eyebrow/mouth_2.png", "assets/main/chars/gillian/eyebrow/mouth_3.png"]
+        }
+      },
+      "embaressed": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/gillian/embaressed/gillian.png",
+          "eyes": ["assets/main/chars/gillian/embaressed/gillian.png"],
+          "mouth": ["assets/main/chars/gillian/embaressed/mouth_1.png", "assets/main/chars/gillian/embaressed/mouth_2.png", "assets/main/chars/gillian/embaressed/mouth_3.png", "assets/main/chars/gillian/embaressed/mouth_4.png"]
+        }
+      }
+    }
+  },
+  "kira": {
+    "displayName": "*Kira* Miki",
+    "nameColor": "#B82293",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 38, "y": 55 }, "mouth": { "x": 55, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/kira/normal/kira.png",
+          "eyes": ["assets/main/chars/kira/normal/eyes_1.png", "assets/main/chars/kira/normal/eyes_2.png", "assets/main/chars/kira/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/kira/normal/mouth_1.png", "assets/main/chars/kira/normal/mouth_2.png", "assets/main/chars/kira/normal/mouth_3.png"]
+        }
+      },
+      "happy": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 55, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/kira/happy/kira.png",
+          "eyes": ["assets/main/chars/kira/happy/kira.png"],
+          "mouth": ["assets/main/chars/kira/happy/mouth_1.png", "assets/main/chars/kira/happy/mouth_2.png", "assets/main/chars/kira/happy/mouth_3.png"]
+        }
+      },
+      "edgy": {
+        "offsets": { "eyes": { "x": 40, "y": 50 }, "mouth": { "x": 53, "y": 79 } },
+        "sprites": {
+          "body": "assets/main/chars/kira/edgy/kira.png",
+          "eyes": ["assets/main/chars/kira/edgy/eyes_1.png", "assets/main/chars/kira/edgy/eyes_2.png", "assets/main/chars/kira/edgy/eyes_3.png"],
+          "mouth": ["assets/main/chars/kira/edgy/mouth_1.png", "assets/main/chars/kira/edgy/mouth_2.png", "assets/main/chars/kira/edgy/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "alma": {
+    "displayName": "Alma",
+    "nameColor": "#DECC57",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 36, "y": 72 }, "mouth": { "x": 45, "y": 103 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/normal/alma.png",
+          "eyes": ["assets/main/chars/alma/normal/eyes_1.png", "assets/main/chars/alma/normal/eyes_2.png", "assets/main/chars/alma/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/normal/mouth_1.png", "assets/main/chars/alma/normal/mouth_2.png", "assets/main/chars/alma/normal/mouth_3.png", "assets/main/chars/alma/normal/mouth_4.png"]
+        }
+      },
+      "concerned": {
+        "offsets": { "eyes": { "x": 37, "y": 71 }, "mouth": { "x": 44, "y": 109 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/concerned/alma.png",
+          "eyes": ["assets/main/chars/alma/concerned/eyes_1.png", "assets/main/chars/alma/concerned/eyes_2.png", "assets/main/chars/alma/concerned/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/concerned/mouth_1.png", "assets/main/chars/alma/concerned/mouth_2.png", "assets/main/chars/alma/concerned/mouth_3.png", "assets/main/chars/alma/concerned/mouth_4.png"]
+        }
+      },
+      "confused1": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 45, "y": 112 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/confused1/alma.png",
+          "eyes": ["assets/main/chars/alma/confused1/alma.png"],
+          "mouth": ["assets/main/chars/alma/confused1/mouth_1.png", "assets/main/chars/alma/confused1/mouth_2.png", "assets/main/chars/alma/confused1/mouth_3.png", "assets/main/chars/alma/confused1/mouth_4.png", "assets/main/chars/alma/confused1/mouth_5.png", "assets/main/chars/alma/confused1/mouth_6.png", "assets/main/chars/alma/confused1/mouth_7.png"]
+        }
+      },
+      "confused2": {
+        "offsets": { "eyes": { "x": 49, "y": 76 }, "mouth": { "x": 56, "y": 112 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/confused2/alma.png",
+          "eyes": ["assets/main/chars/alma/confused2/eyes_1.png", "assets/main/chars/alma/confused2/eyes_2.png", "assets/main/chars/alma/confused2/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/confused2/mouth_1.png", "assets/main/chars/alma/confused2/mouth_2.png", "assets/main/chars/alma/confused2/mouth_3.png", "assets/main/chars/alma/confused2/mouth_4.png", "assets/main/chars/alma/confused2/mouth_5.png", "assets/main/chars/alma/confused2/mouth_6.png", "assets/main/chars/alma/confused2/mouth_7.png"]
+        }
+      },
+      "serious": {
+        "offsets": { "eyes": { "x": 35, "y": 73 }, "mouth": { "x": 48, "y": 111 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/serious/alma.png",
+          "eyes": ["assets/main/chars/alma/serious/eyes_1.png", "assets/main/chars/alma/serious/eyes_2.png", "assets/main/chars/alma/serious/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/serious/mouth_1.png", "assets/main/chars/alma/serious/mouth_2.png", "assets/main/chars/alma/serious/mouth_3.png", "assets/main/chars/alma/serious/mouth_4.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 47, "y": 113 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/smile/alma.png",
+          "eyes": ["assets/main/chars/alma/smile/alma.png"],
+          "mouth": ["assets/main/chars/alma/smile/mouth_1.png", "assets/main/chars/alma/smile/mouth_2.png", "assets/main/chars/alma/smile/mouth_3.png", "assets/main/chars/alma/smile/mouth_4.png"]
+        }
+      },
+      "smug": {
+        "offsets": { "eyes": { "x": 31, "y": 75 }, "mouth": { "x": 52, "y": 112 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/smug/alma.png",
+          "eyes": ["assets/main/chars/alma/smug/eyes_1.png", "assets/main/chars/alma/smug/eyes_2.png", "assets/main/chars/alma/smug/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/smug/mouth_1.png", "assets/main/chars/alma/smug/mouth_2.png", "assets/main/chars/alma/smug/mouth_3.png", "assets/main/chars/alma/smug/mouth_4.png"]
+        }
+      },
+      "worried": {
+        "offsets": { "eyes": { "x": 37, "y": 69 }, "mouth": { "x": 43, "y": 106 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/worried/alma.png",
+          "eyes": ["assets/main/chars/alma/worried/eyes_1.png", "assets/main/chars/alma/worried/eyes_2.png", "assets/main/chars/alma/worried/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/worried/mouth_1.png", "assets/main/chars/alma/worried/mouth_2.png", "assets/main/chars/alma/worried/mouth_3.png"]
+        }
+      },
+      "drunk1": {
+        "offsets": { "eyes": { "x": 33, "y": 71 }, "mouth": { "x": 48, "y": 111 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/drunk1/alma.png",
+          "eyes": ["assets/main/chars/alma/drunk1/eyes_1.png", "assets/main/chars/alma/drunk1/eyes_2.png", "assets/main/chars/alma/drunk1/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/drunk1/mouth_1.png", "assets/main/chars/alma/drunk1/mouth_2.png", "assets/main/chars/alma/drunk1/mouth_3.png", "assets/main/chars/alma/drunk1/mouth_4.png"]
+        }
+      },
+      "drunk2": {
+        "offsets": { "eyes": { "x": 32.5, "y": 70 }, "mouth": { "x": 51, "y": 110 } },
+        "sprites": {
+          "body": "assets/main/chars/alma/drunk2/alma.png",
+          "eyes": ["assets/main/chars/alma/drunk2/eyes_1.png", "assets/main/chars/alma/drunk2/eyes_2.png", "assets/main/chars/alma/drunk2/eyes_3.png"],
+          "mouth": ["assets/main/chars/alma/drunk2/mouth_1.png", "assets/main/chars/alma/drunk2/mouth_2.png", "assets/main/chars/alma/drunk2/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "anna": {
+    "displayName": "Anna",
+    "nameColor": "0xFFFFFF",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/normal/anna.png",
+          "eyes": ["assets/main/chars/anna/normal/eyes_1.png", "assets/main/chars/anna/normal/eyes_2.png", "assets/main/chars/anna/normal/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/normal/mouth_1.png", "assets/main/chars/anna/normal/mouth_2.png", "assets/main/chars/anna/normal/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/normal/glitch_1.png",
+            "assets/main/chars/anna/normal/glitch_2.png",
+            "assets/main/chars/anna/normal/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/smile/anna.png",
+          "eyes": ["assets/main/chars/anna/smile/anna.png"],
+          "mouth": [
+            "assets/main/chars/anna/smile/mouth_1.png", "assets/main/chars/anna/smile/mouth_2.png", "assets/main/chars/anna/smile/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/smile/glitch_1.png",
+            "assets/main/chars/anna/smile/glitch_2.png",
+            "assets/main/chars/anna/smile/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      }
+    }
+  },
+  "art": {
+    "displayName": "Art",
+    "nameColor": "#5B595C",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 50, "y": 35 }, "mouth": { "x": 45, "y": 56 } },
+        "sprites": {
+          "body": "assets/main/chars/art/normal/art.png",
+          "eyes": ["assets/main/chars/art/normal/eyes_1.png", "assets/main/chars/art/normal/eyes_2.png", "assets/main/chars/art/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/art/normal/mouth_1.png", "assets/main/chars/art/normal/mouth_2.png", "assets/main/chars/art/normal/mouth_3.png"]
+        }
+      },
+      "sigh": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 52.5, "y": 58.5 } },
+        "sprites": {
+          "body": "assets/main/chars/art/sigh/art.png",
+          "eyes": ["assets/main/chars/art/sigh/art.png"],
+          "mouth": ["assets/main/chars/art/sigh/mouth_1.png", "assets/main/chars/art/sigh/mouth_2.png", "assets/main/chars/art/sigh/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "betty": {
+    "displayName": "Betty",
+    "nameColor": "#60EF36",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 49, "y": 39 }, "mouth": { "x": 50, "y": 68 } },
+        "sprites": {
+          "body": "assets/main/chars/betty/normal/betty.png",
+          "eyes": ["assets/main/chars/betty/normal/eyes_1.png", "assets/main/chars/betty/normal/eyes_2.png", "assets/main/chars/betty/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/betty/normal/mouth_1.png", "assets/main/chars/betty/normal/mouth_2.png", "assets/main/chars/betty/normal/mouth_3.png", "assets/main/chars/betty/normal/mouth_4.png", "assets/main/chars/betty/normal/mouth_5.png", "assets/main/chars/betty/normal/mouth_6.png"]
+        }
+      },
+      "drunk": {
+        "offsets": { "eyes": { "x": 49, "y": 34 }, "mouth": { "x": 53, "y": 67 } },
+        "sprites": {
+          "body": "assets/main/chars/betty/drunk/betty.png",
+          "eyes": ["assets/main/chars/betty/drunk/eyes_1.png", "assets/main/chars/betty/drunk/eyes_2.png", "assets/main/chars/betty/drunk/eyes_3.png"],
+          "mouth": ["assets/main/chars/betty/drunk/mouth_1.png", "assets/main/chars/betty/drunk/mouth_2.png", "assets/main/chars/betty/drunk/mouth_3.png", "assets/main/chars/betty/drunk/mouth_4.png", "assets/main/chars/betty/drunk/mouth_5.png", "assets/main/chars/betty/drunk/mouth_6.png"]
+        }
+      },
+      "grumpy": {
+        "offsets": { "eyes": { "x": 45, "y": 33 }, "mouth": { "x": 61, "y": 68 } },
+        "sprites": {
+          "body": "assets/main/chars/betty/grumpy/betty.png",
+          "eyes": ["assets/main/chars/betty/grumpy/eyes_1.png", "assets/main/chars/betty/grumpy/eyes_2.png", "assets/main/chars/betty/grumpy/eyes_3.png"],
+          "mouth": ["assets/main/chars/betty/grumpy/mouth_1.png", "assets/main/chars/betty/grumpy/mouth_2.png", "assets/main/chars/betty/grumpy/mouth_3.png"]
+        }
+      },
+      "sigh": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 54, "y": 69 } },
+        "sprites": {
+          "body": "assets/main/chars/betty/sigh/betty.png",
+          "eyes": ["assets/main/chars/betty/sigh/betty.png"],
+          "mouth": ["assets/main/chars/betty/sigh/mouth_1.png", "assets/main/chars/betty/sigh/mouth_2.png", "assets/main/chars/betty/sigh/mouth_3.png", "assets/main/chars/betty/sigh/mouth_4.png"]
+        }
+      }
+    }
+  },
+  "brian": {
+    "displayName": "Brian",
+    "nameColor": "#CFAC57",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 32, "y": 36 }, "mouth": { "x": 39, "y": 60.5 } },
+        "sprites": {
+          "body": "assets/main/chars/brian/normal/brian.png",
+          "eyes": ["assets/main/chars/brian/normal/eyes_1.png", "assets/main/chars/brian/normal/eyes_2.png", "assets/main/chars/brian/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/brian/normal/mouth_1.png", "assets/main/chars/brian/normal/mouth_2.png", "assets/main/chars/brian/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "dana": {
+    "displayName": "Dana",
+    "nameColor": "#B23F50",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 33, "y": 64 }, "mouth": { "x": 51, "y": 98 } },
+        "sprites": {
+          "body": "assets/main/chars/dana/normal/dana.png",
+          "eyes": ["assets/main/chars/dana/normal/eyes_1.png", "assets/main/chars/dana/normal/eyes_2.png", "assets/main/chars/dana/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/dana/normal/mouth_1.png", "assets/main/chars/dana/normal/mouth_2.png", "assets/main/chars/dana/normal/mouth_3.png"]
+        }
+      },
+      "oops": {
+        "offsets": { "eyes": { "x": 36, "y": 53 }, "mouth": { "x": 51, "y": 98 } },
+        "sprites": {
+          "body": "assets/main/chars/dana/oops/dana.png",
+          "eyes": ["assets/main/chars/dana/oops/eyes_1.png", "assets/main/chars/dana/oops/eyes_2.png", "assets/main/chars/dana/oops/eyes_3.png"],
+          "mouth": ["assets/main/chars/dana/oops/mouth_1.png", "assets/main/chars/dana/oops/mouth_2.png", "assets/main/chars/dana/oops/mouth_3.png"]
+        }
+      },
+      "serious": {
+        "offsets": { "eyes": { "x": 36, "y": 65 }, "mouth": { "x": 50, "y": 98 } },
+        "sprites": {
+          "body": "assets/main/chars/dana/serious/dana.png",
+          "eyes": ["assets/main/chars/dana/serious/eyes_1.png", "assets/main/chars/dana/serious/eyes_2.png", "assets/main/chars/dana/serious/eyes_3.png"],
+          "mouth": ["assets/main/chars/dana/serious/mouth_1.png", "assets/main/chars/dana/serious/mouth_2.png", "assets/main/chars/dana/serious/mouth_3.png"]
+        }
+      },
+      "mask": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 1, "y": 1 } },
+        "sprites": {
+          "body": "assets/main/chars/dana/mask/dana.png",
+          "eyes": ["assets/main/chars/dana/mask/dana.png"],
+          "mouth": []
+        }
+      }
+    }
+  },
+  "deal": {
+    "displayName": "Deal",
+    "nameColor": "#D1F096",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 7, "y": 48 }, "mouth": { "x": 26, "y": 85 } },
+        "sprites": {
+          "body": "assets/main/chars/deal/normal/deal.png",
+          "eyes": ["assets/main/chars/deal/normal/eyes_1.png", "assets/main/chars/deal/normal/eyes_2.png", "assets/main/chars/deal/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/deal/normal/mouth_1.png", "assets/main/chars/deal/normal/mouth_2.png", "assets/main/chars/deal/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "shiba": {
+    "displayName": "Rad Shiba",
+    "nameColor": "#9FA268",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/shiba/normal/shiba.png",
+          "eyes": ["assets/main/chars/shiba/normal/shiba.png"],
+          "mouth": ["assets/main/chars/shiba/normal/shiba.png", "assets/main/chars/shiba/normal/mouth_2.png"]
+        }
+      }
+    }
+  },
+  "donovan": {
+    "displayName": "Mr. Donovan",
+    "nameColor": "#9A4756",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 42, "y": 42 }, "mouth": { "x": 41, "y": 69 } },
+        "sprites": {
+          "body": "assets/main/chars/donovan/normal/donovan.png",
+          "eyes": ["assets/main/chars/donovan/normal/eyes_1.png", "assets/main/chars/donovan/normal/eyes_2.png", "assets/main/chars/donovan/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/donovan/normal/mouth_1.png", "assets/main/chars/donovan/normal/mouth_2.png", "assets/main/chars/donovan/normal/mouth_3.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 36, "y": 69 } },
+        "sprites": {
+          "body": "assets/main/chars/donovan/smile/donovan.png",
+          "eyes": ["assets/main/chars/donovan/smile/donovan.png"],
+          "mouth": ["assets/main/chars/donovan/smile/mouth_1.png", "assets/main/chars/donovan/smile/mouth_2.png", "assets/main/chars/donovan/smile/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "gaby": {
+    "displayName": "Gaby",
+    "nameColor": "#736465",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 50, "y": 40 }, "mouth": { "x": 69, "y": 75 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/normal/gaby.png",
+          "eyes": ["assets/main/chars/gaby/normal/eyes_1.png", "assets/main/chars/gaby/normal/eyes_2.png", "assets/main/chars/gaby/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/gaby/normal/mouth_1.png", "assets/main/chars/gaby/normal/mouth_2.png", "assets/main/chars/gaby/normal/mouth_3.png"]
+        }
+      },
+      "angry": {
+        "offsets": { "eyes": { "x": 54, "y": 44 }, "mouth": { "x": 32.8, "y": 77 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/angry/gaby.png",
+          "eyes": ["assets/main/chars/gaby/angry/eyes_1.png", "assets/main/chars/gaby/angry/eyes_2.png", "assets/main/chars/gaby/angry/eyes_3.png"],
+          "mouth": ["assets/main/chars/gaby/angry/mouth_1.png", "assets/main/chars/gaby/angry/mouth_2.png", "assets/main/chars/gaby/angry/mouth_3.png"]
+        }
+      },
+      "sad": {
+        "offsets": { "eyes": { "x": 47, "y": 44 }, "mouth": { "x": 70, "y": 72.5 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/sad/gaby.png",
+          "eyes": ["assets/main/chars/gaby/sad/eyes_1.png", "assets/main/chars/gaby/sad/eyes_2.png", "assets/main/chars/gaby/sad/eyes_3.png"],
+          "mouth": ["assets/main/chars/gaby/sad/mouth_1.png", "assets/main/chars/gaby/sad/mouth_2.png", "assets/main/chars/gaby/sad/mouth_3.png"]
+        }
+      },
+      "shy": {
+        "offsets": { "eyes": { "x": 56.5, "y": 45 }, "mouth": { "x": 66, "y": 73 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/shy/gaby.png",
+          "eyes": ["assets/main/chars/gaby/shy/eyes_1.png", "assets/main/chars/gaby/shy/eyes_2.png", "assets/main/chars/gaby/shy/eyes_3.png"],
+          "mouth": ["assets/main/chars/gaby/shy/mouth_1.png", "assets/main/chars/gaby/shy/mouth_2.png", "assets/main/chars/gaby/shy/mouth_3.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 68, "y": 76 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/smile/gaby.png",
+          "eyes": ["assets/main/chars/gaby/smile/gaby.png"],
+          "mouth": ["assets/main/chars/gaby/smile/mouth_1.png", "assets/main/chars/gaby/smile/mouth_2.png", "assets/main/chars/gaby/smile/mouth_3.png", "assets/main/chars/gaby/smile/mouth_4.png"]
+        }
+      },
+      "surprise": {
+        "offsets": { "eyes": { "x": 54, "y": 42 }, "mouth": { "x": 66, "y": 73 } },
+        "sprites": {
+          "body": "assets/main/chars/gaby/surprise/gaby.png",
+          "eyes": ["assets/main/chars/gaby/surprise/eyes_1.png", "assets/main/chars/gaby/surprise/eyes_2.png", "assets/main/chars/gaby/surprise/eyes_3.png"],
+          "mouth": ["assets/main/chars/gaby/surprise/mouth_1.png", "assets/main/chars/gaby/surprise/mouth_2.png", "assets/main/chars/gaby/surprise/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "ingram": {
+    "displayName": "Ingram",
+    "nameColor": "#E54712",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 95, "y": 47 }, "mouth": { "x": 93, "y": 78 } },
+        "sprites": {
+          "body": "assets/main/chars/ingram/normal/ingram.png",
+          "eyes": ["assets/main/chars/ingram/normal/eyes_1.png", "assets/main/chars/ingram/normal/eyes_2.png", "assets/main/chars/ingram/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/ingram/normal/mouth_1.png", "assets/main/chars/ingram/normal/mouth_2.png", "assets/main/chars/ingram/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "jamie": {
+    "displayName": "Jamie",
+    "nameColor": "#85865B",
+    "speechFile": "speechLow",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 66, "y": 57 }, "mouth": { "x": 76, "y": 94 } },
+        "sprites": {
+          "body": "assets/main/chars/jamie/normal/jamie.png",
+          "eyes": ["assets/main/chars/jamie/normal/eyes_1.png", "assets/main/chars/jamie/normal/eyes_2.png", "assets/main/chars/jamie/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/jamie/normal/mouth_1.png", "assets/main/chars/jamie/normal/mouth_2.png", "assets/main/chars/jamie/normal/mouth_3.png"]
+        }
+      },
+      "shy": {
+        "offsets": { "eyes": { "x": 68, "y": 59 }, "mouth": { "x": 76, "y": 94 } },
+        "sprites": {
+          "body": "assets/main/chars/jamie/shy/jamie.png",
+          "eyes": ["assets/main/chars/jamie/shy/eyes_1.png", "assets/main/chars/jamie/shy/eyes_2.png", "assets/main/chars/jamie/shy/eyes_3.png"],
+          "mouth": ["assets/main/chars/jamie/shy/mouth_1.png", "assets/main/chars/jamie/shy/mouth_2.png", "assets/main/chars/jamie/shy/mouth_3.png"]
+        }
+      },
+      "surprised": {
+        "offsets": { "eyes": { "x": 59.5, "y": 48 }, "mouth": { "x": 76, "y": 94 } },
+        "sprites": {
+          "body": "assets/main/chars/jamie/surprised/jamie.png",
+          "eyes": ["assets/main/chars/jamie/surprised/eyes_1.png", "assets/main/chars/jamie/surprised/eyes_2.png", "assets/main/chars/jamie/surprised/eyes_3.png"],
+          "mouth": ["assets/main/chars/jamie/surprised/mouth_1.png", "assets/main/chars/jamie/surprised/mouth_2.png", "assets/main/chars/jamie/surprised/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "jill": {
+    "displayName": "Jill",
+    "nameColor": "#5E6FAB",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 13, "y": 44 }, "mouth": { "x": 23, "y": 79 } },
+        "sprites": {
+          "body": "assets/main/chars/jill/normal/jill.png",
+          "eyes": ["assets/main/chars/jill/normal/eyes_1.png", "assets/main/chars/jill/normal/eyes_2.png", "assets/main/chars/jill/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/jill/normal/mouth_1.png", "assets/main/chars/jill/normal/mouth_2.png", "assets/main/chars/jill/normal/mouth_3.png"]
+        }
+      },
+      "embaressed": {
+        "offsets": { "eyes": { "x": 17.5, "y": 48 }, "mouth": { "x": 20, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/jill/embaressed/jill.png",
+          "eyes": ["assets/main/chars/jill/embaressed/eyes_1.png", "assets/main/chars/jill/embaressed/eyes_2.png", "assets/main/chars/jill/embaressed/eyes_3.png"],
+          "mouth": ["assets/main/chars/jill/embaressed/mouth_1.png", "assets/main/chars/jill/embaressed/mouth_2.png", "assets/main/chars/jill/embaressed/mouth_3.png"]
+        }
+      },
+      "sad": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 26, "y": 78 } },
+        "sprites": {
+          "body": "assets/main/chars/jill/sad/jill.png",
+          "eyes": ["assets/main/chars/jill/sad/jill.png"],
+          "mouth": ["assets/main/chars/jill/sad/mouth_1.png", "assets/main/chars/jill/sad/mouth_2.png", "assets/main/chars/jill/sad/mouth_3.png"]
+        }
+      },
+      "surprised": {
+        "offsets": { "eyes": { "x": 16, "y": 42 }, "mouth": { "x": 32, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/jill/surprised/jill.png",
+          "eyes": ["assets/main/chars/jill/surprised/eyes_1.png", "assets/main/chars/jill/surprised/eyes_2.png", "assets/main/chars/jill/surprised/eyes_3.png"],
+          "mouth": ["assets/main/chars/jill/surprised/mouth_1.png", "assets/main/chars/jill/surprised/mouth_2.png", "assets/main/chars/jill/surprised/mouth_3.png", "assets/main/chars/jill/surprised/mouth_4.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 13, "y": 44 }, "mouth": { "x": 20, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/jill/smile/jill.png",
+          "eyes": ["assets/main/chars/jill/smile/eyes_1.png", "assets/main/chars/jill/smile/eyes_2.png", "assets/main/chars/jill/smile/eyes_3.png"],
+          "mouth": ["assets/main/chars/jill/smile/mouth_1.png", "assets/main/chars/jill/smile/mouth_2.png", "assets/main/chars/jill/smile/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "kim": {
+    "displayName": "Kim",
+    "nameColor": "#9B76A2",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 20, "y": 76 }, "mouth": { "x": 29, "y": 96 } },
+        "sprites": {
+          "body": "assets/main/chars/kim/normal/kim.png",
+          "eyes": ["assets/main/chars/kim/normal/eyes_1.png", "assets/main/chars/kim/normal/eyes_2.png", "assets/main/chars/kim/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/kim/normal/mouth_1.png", "assets/main/chars/kim/normal/mouth_2.png", "assets/main/chars/kim/normal/mouth_3.png"]
+        }
+      },
+      "sad": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 35, "y": 99 } },
+        "sprites": {
+          "body": "assets/main/chars/kim/sad/kim.png",
+          "eyes": ["assets/main/chars/kim/sad/kim.png"],
+          "mouth": ["assets/main/chars/kim/sad/mouth_1.png", "assets/main/chars/kim/sad/mouth_2.png", "assets/main/chars/kim/sad/mouth_3.png", "assets/main/chars/kim/sad/mouth_4.png"]
+        }
+      },
+      "murder": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 35, "y": 99 } },
+        "sprites": {
+          "body": "assets/main/chars/kim/murder/kim.png",
+          "eyes": ["assets/main/chars/kim/murder/kim.png"],
+          "mouth": ["assets/main/chars/kim/murder/mouth_1.png", "assets/main/chars/kim/murder/mouth_2.png", "assets/main/chars/kim/murder/mouth_3.png", "assets/main/chars/kim/murder/mouth_4.png"]
+        }
+      }
+    }
+  },
+  "mario": {
+    "displayName": "Mario",
+    "nameColor": "#8D0928",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 63, "y": 52 }, "mouth": { "x": 81, "y": 88 } },
+        "sprites": {
+          "body": "assets/main/chars/mario/normal/mario.png",
+          "eyes": ["assets/main/chars/mario/normal/eyes_1.png", "assets/main/chars/mario/normal/eyes_2.png", "assets/main/chars/mario/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/mario/normal/mouth_1.png", "assets/main/chars/mario/normal/mouth_2.png", "assets/main/chars/mario/normal/mouth_3.png"]
+        }
+      },
+      "surprised": {
+        "offsets": { "eyes": { "x": 63, "y": 50 }, "mouth": { "x": 84, "y": 85 } },
+        "sprites": {
+          "body": "assets/main/chars/mario/surprised/mario.png",
+          "eyes": ["assets/main/chars/mario/surprised/eyes_1.png", "assets/main/chars/mario/surprised/eyes_2.png", "assets/main/chars/mario/surprised/eyes_3.png"],
+          "mouth": ["assets/main/chars/mario/surprised/mouth_1.png", "assets/main/chars/mario/surprised/mouth_2.png", "assets/main/chars/mario/surprised/mouth_3.png"]
+        }
+      },
+      "embaressed": {
+        "offsets": { "eyes": { "x": 67, "y": 53 }, "mouth": { "x": 82, "y": 83 } },
+        "sprites": {
+          "body": "assets/main/chars/mario/embaressed/mario.png",
+          "eyes": ["assets/main/chars/mario/embaressed/eyes_1.png", "assets/main/chars/mario/embaressed/eyes_2.png", "assets/main/chars/mario/embaressed/eyes_3.png"],
+          "mouth": ["assets/main/chars/mario/embaressed/mouth_1.png", "assets/main/chars/mario/embaressed/mouth_2.png", "assets/main/chars/mario/embaressed/mouth_3.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 81, "y": 86 } },
+        "sprites": {
+          "body": "assets/main/chars/mario/smile/mario.png",
+          "eyes": ["assets/main/chars/mario/smile/mario.png"],
+          "mouth": ["assets/main/chars/mario/smile/mouth_1.png", "assets/main/chars/mario/smile/mouth_2.png", "assets/main/chars/mario/smile/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "norma": {
+    "displayName": "Norma", 
+    "nameColor": "#FAFAFA",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 29, "y": 49 }, "mouth": { "x": 44, "y": 77 } },
+        "sprites": {
+          "body": "assets/main/chars/norma/normal/norma.png",
+          "eyes": ["assets/main/chars/norma/normal/eyes_1.png", "assets/main/chars/norma/normal/eyes_2.png", "assets/main/chars/norma/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/norma/normal/mouth_1.png", "assets/main/chars/norma/normal/mouth_2.png", "assets/main/chars/norma/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "sei": {
+    "displayName": "Sei", 
+    "nameColor": "#619696",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 50, "y": 45 }, "mouth": { "x": 69, "y": 80 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/normal/sei.png",
+          "eyes": ["assets/main/chars/sei/normal/eyes_1.png", "assets/main/chars/sei/normal/eyes_2.png", "assets/main/chars/sei/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/normal/mouth_1.png", "assets/main/chars/sei/normal/mouth_2.png", "assets/main/chars/sei/normal/mouth_3.png", "assets/main/chars/sei/normal/mouth_4.png"]
+        }
+      },
+      "drunk": {
+        "offsets": { "eyes": { "x": 49, "y": 45 }, "mouth": { "x": 59.5, "y": 80 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/drunk/sei.png",
+          "eyes": ["assets/main/chars/sei/drunk/eyes_1.png", "assets/main/chars/sei/drunk/eyes_2.png", "assets/main/chars/sei/drunk/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/drunk/mouth_1.png", "assets/main/chars/sei/drunk/mouth_2.png", "assets/main/chars/sei/drunk/mouth_3.png", "assets/main/chars/sei/drunk/mouth_4.png"]
+        }
+      },
+      "smile": {
+        "offsets": { "eyes": { "x": 50, "y": 45 }, "mouth": { "x": 52, "y": 81 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/smile/sei.png",
+          "eyes": ["assets/main/chars/sei/smile/eyes_1.png", "assets/main/chars/sei/smile/eyes_2.png", "assets/main/chars/sei/smile/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/smile/mouth_1.png", "assets/main/chars/sei/smile/mouth_2.png", "assets/main/chars/sei/smile/mouth_3.png", "assets/main/chars/sei/smile/mouth_4.png"]
+        }
+      },
+      "wounded normal": {
+        "offsets": { "eyes": { "x": 38, "y": 47 }, "mouth": { "x": 56, "y": 80 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/wounded normal/sei.png",
+          "eyes": ["assets/main/chars/sei/wounded normal/eyes_1.png", "assets/main/chars/sei/wounded normal/eyes_2.png", "assets/main/chars/sei/wounded normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/wounded normal/mouth_1.png", "assets/main/chars/sei/wounded normal/mouth_2.png", "assets/main/chars/sei/wounded normal/mouth_3.png"]
+        }
+      },
+      "wounded sorry": {
+        "offsets": { "eyes": { "x": 27, "y": 40 }, "mouth": { "x": 51, "y": 79 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/wounded sorry/sei.png",
+          "eyes": ["assets/main/chars/sei/wounded sorry/eyes_1.png", "assets/main/chars/sei/wounded sorry/eyes_2.png", "assets/main/chars/sei/wounded sorry/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/wounded sorry/mouth_1.png", "assets/main/chars/sei/wounded sorry/mouth_2.png", "assets/main/chars/sei/wounded sorry/mouth_3.png"]
+        }
+      },
+      "wounded sad": {
+        "offsets": { "eyes": { "x": 39, "y": 45 }, "mouth": { "x": 59, "y": 82 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/wounded sad/sei.png",
+          "eyes": ["assets/main/chars/sei/wounded sad/eyes_1.png", "assets/main/chars/sei/wounded sad/eyes_2.png", "assets/main/chars/sei/wounded sad/eyes_3.png"],
+          "mouth": ["assets/main/chars/sei/wounded sad/mouth_1.png", "assets/main/chars/sei/wounded sad/mouth_2.png", "assets/main/chars/sei/wounded sad/mouth_3.png"]
+        }
+      },
+      "wounded pain": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 55.5, "y": 79.5 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/wounded pain/sei.png",
+          "eyes": ["assets/main/chars/sei/wounded pain/sei.png"],
+          "mouth": ["assets/main/chars/sei/wounded pain/mouth_1.png", "assets/main/chars/sei/wounded pain/mouth_2.png", "assets/main/chars/sei/wounded pain/mouth_3.png", "assets/main/chars/sei/wounded pain/mouth_4.png"]
+        }
+      },
+      "mask": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0.1, "y": 0.1 } },
+        "sprites": {
+          "body": "assets/main/chars/sei/mask/sei.png",
+          "eyes": ["assets/main/chars/sei/mask/sei.png"],
+          "mouth": ["assets/main/chars/sei/mask/sei.png"],
+          "characterAnim": [
+            "assets/main/chars/sei/mask/sei2.png",
+            "assets/main/chars/sei/mask/sei3.png",
+            "assets/main/chars/sei/mask/sei4.png",
+            "assets/main/chars/sei/mask/sei5.png"
+          ],
+        "animSpeed": 0.15,
+        "animInterval": { "min": 5000, "max": 7000 }
+        }
+      }
+    }
+  },
+  "stella": {
+    "displayName": "Stella", 
+    "nameColor": "#D666B3",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 88, "y": 5 }, "mouth": { "x": 66, "y": 30 }, "characterAnim": { "x": 41, "y": -72 } },
+        "sprites": {
+          "body": "assets/main/chars/stella/normal/stella.png",
+          "eyes": ["assets/main/chars/stella/normal/eyes_1.png", "assets/main/chars/stella/normal/eyes_2.png", "assets/main/chars/stella/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/stella/normal/mouth_1.png", "assets/main/chars/stella/normal/mouth_2.png", "assets/main/chars/stella/normal/mouth_3.png", "assets/main/chars/stella/normal/mouth_4.png"],
+          "characterAnim": [
+            "assets/main/chars/stella/normal/ears_1.png",
+            "assets/main/chars/stella/normal/ears_2.png",
+            "assets/main/chars/stella/normal/ears_3.png",
+            "assets/main/chars/stella/normal/ears_4.png"
+          ],
+          "staticCharAnim": "assets/main/chars/stella/normal/ears.png",
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "concerned": {
+        "offsets": { "eyes": { "x": 82, "y": -1 }, "mouth": { "x": 68, "y": 30 }, "characterAnim": { "x": 41, "y": -72 } },
+        "sprites": {
+          "body": "assets/main/chars/stella/concerned/stella.png",
+          "eyes": ["assets/main/chars/stella/concerned/eyes_1.png", "assets/main/chars/stella/concerned/eyes_2.png", "assets/main/chars/stella/concerned/eyes_3.png"],
+          "mouth": ["assets/main/chars/stella/concerned/mouth_1.png", "assets/main/chars/stella/concerned/mouth_2.png", "assets/main/chars/stella/concerned/mouth_3.png"],
+          "characterAnim": [
+            "assets/main/chars/stella/concerned/ears_1.png",
+            "assets/main/chars/stella/concerned/ears_2.png",
+            "assets/main/chars/stella/concerned/ears_3.png",
+            "assets/main/chars/stella/concerned/ears_4.png"
+          ],
+          "staticCharAnim": "assets/main/chars/stella/concerned/ears.png",
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "sad": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 70, "y": 28 }, "characterAnim": { "x": 41, "y": -72 } },
+        "sprites": {
+          "body": "assets/main/chars/stella/sad/stella.png",
+          "eyes": ["assets/main/chars/stella/sad/stella.png"],
+          "mouth": ["assets/main/chars/stella/sad/mouth_1.png", "assets/main/chars/stella/sad/mouth_2.png", "assets/main/chars/stella/sad/mouth_3.png"],
+          "characterAnim": [
+            "assets/main/chars/stella/sad/ears_1.png",
+            "assets/main/chars/stella/sad/ears_2.png",
+            "assets/main/chars/stella/sad/ears_3.png",
+            "assets/main/chars/stella/sad/ears_4.png"
+          ],
+          "staticCharAnim": "assets/main/chars/stella/sad/ears.png",
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "embaressed": {
+        "offsets": { "eyes": { "x": 88, "y": 1 }, "mouth": { "x": 70, "y": 30 }, "characterAnim": { "x": 41, "y": -72 } },
+        "sprites": {
+          "body": "assets/main/chars/stella/embaressed/stella.png",
+          "eyes": ["assets/main/chars/stella/embaressed/eyes_1.png", "assets/main/chars/stella/embaressed/eyes_2.png", "assets/main/chars/stella/embaressed/eyes_3.png"],
+          "mouth": ["assets/main/chars/stella/embaressed/mouth_1.png", "assets/main/chars/stella/embaressed/mouth_2.png", "assets/main/chars/stella/embaressed/mouth_3.png", "assets/main/chars/stella/embaressed/mouth_4.png"],
+          "characterAnim": [
+            "assets/main/chars/stella/embaressed/ears_1.png",
+            "assets/main/chars/stella/embaressed/ears_2.png",
+            "assets/main/chars/stella/embaressed/ears_3.png",
+            "assets/main/chars/stella/embaressed/ears_4.png"
+          ],
+          "staticCharAnim": "assets/main/chars/stella/embaressed/ears.png",
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "happy": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 59, "y": -3 }, "characterAnim": { "x": 41, "y": -72 } },
+        "sprites": {
+          "body": "assets/main/chars/stella/happy/stella.png",
+          "eyes": ["assets/main/chars/stella/happy/stella.png"],
+          "mouth": ["assets/main/chars/stella/happy/mouth_1.png", "assets/main/chars/stella/happy/mouth_2.png", "assets/main/chars/stella/happy/mouth_3.png"],
+          "characterAnim": [
+            "assets/main/chars/stella/happy/ears_1.png",
+            "assets/main/chars/stella/happy/ears_2.png",
+            "assets/main/chars/stella/happy/ears_3.png",
+            "assets/main/chars/stella/happy/ears_4.png"
+          ],
+          "staticCharAnim": "assets/main/chars/stella/happy/ears.png",
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      }
+    }
+  },
+  "streaming-chan": {
+    "displayName": "Streaming-chan", 
+    "nameColor": "#3A8DB1",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 62, "y": 88 }, "mouth": { "x": 68, "y": 115 } },
+        "sprites": {
+          "body": "assets/main/chars/streaming-chan/normal/streaming-chan.png",
+          "eyes": ["assets/main/chars/streaming-chan/normal/eyes_1.png", "assets/main/chars/streaming-chan/normal/eyes_2.png", "assets/main/chars/streaming-chan/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/streaming-chan/normal/mouth_1.png", "assets/main/chars/streaming-chan/normal/mouth_2.png", "assets/main/chars/streaming-chan/normal/mouth_3.png"]
+        }
+      },
+      "excited": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 68, "y": 115 } },
+        "sprites": {
+          "body": "assets/main/chars/streaming-chan/excited/streaming-chan.png",
+          "eyes": ["assets/main/chars/streaming-chan/excited/streaming-chan.png"],
+          "mouth": ["assets/main/chars/streaming-chan/excited/mouth_1.png", "assets/main/chars/streaming-chan/excited/mouth_2.png", "assets/main/chars/streaming-chan/excited/mouth_3.png"]
+        }
+      },
+      "pout": {
+        "offsets": { "eyes": { "x": 60, "y": 85 }, "mouth": { "x": 83, "y": 116 } },
+        "sprites": {
+          "body": "assets/main/chars/streaming-chan/pout/streaming-chan.png",
+          "eyes": ["assets/main/chars/streaming-chan/pout/eyes_1.png", "assets/main/chars/streaming-chan/pout/eyes_2.png", "assets/main/chars/streaming-chan/pout/eyes_3.png"],
+          "mouth": ["assets/main/chars/streaming-chan/pout/mouth_1.png", "assets/main/chars/streaming-chan/pout/mouth_2.png"]
+        }
+      },
+      "drunk": {
+        "offsets": { "eyes": { "x": 65, "y": 90 }, "mouth": { "x": 75, "y": 117 } },
+        "sprites": {
+          "body": "assets/main/chars/streaming-chan/drunk/streaming-chan.png",
+          "eyes": ["assets/main/chars/streaming-chan/drunk/eyes_1.png", "assets/main/chars/streaming-chan/drunk/eyes_2.png", "assets/main/chars/streaming-chan/drunk/eyes_3.png"],
+          "mouth": ["assets/main/chars/streaming-chan/drunk/mouth_1.png", "assets/main/chars/streaming-chan/drunk/mouth_2.png", "assets/main/chars/streaming-chan/drunk/mouth_3.png"]
+        }
+      },
+      "drunk excited": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/streaming-chan/drunk excited/streaming-chan.png",
+          "eyes": ["assets/main/chars/streaming-chan/drunk excited/streaming-chan.png"],
+          "mouth": ["assets/main/chars/streaming-chan/drunk excited/mouth_1.png", "assets/main/chars/streaming-chan/drunk excited/mouth_2.png", "assets/main/chars/streaming-chan/drunk excited/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "taylor": {
+    "displayName": "Taylor", 
+    "nameColor": "#F9AEB0",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/taylor/normal/taylor.png",
+          "eyes": ["assets/main/chars/taylor/normal/taylor.png"],
+          "mouth": [],
+          "characterAnim": [
+            "assets/main/chars/taylor/normal/taylor.png",
+            "assets/main/chars/taylor/normal/taylor2.png",
+            "assets/main/chars/taylor/normal/taylor3.png",
+            "assets/main/chars/taylor/normal/taylor4.png"
+          ],
+          "animSpeed": 0.10,
+          "animInterval": { "min": 0, "max": 0 }
+        }
+      }
+    }
+  },
+  "virgilio": {
+    "displayName": "Virgilio", 
+    "nameColor": "#675975",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 86, "y": 69 }, "mouth": { "x": 90, "y": 96 } },
+        "sprites": {
+          "body": "assets/main/chars/virgilio/normal/virgilio.png",
+          "eyes": ["assets/main/chars/virgilio/normal/eyes_1.png", "assets/main/chars/virgilio/normal/eyes_2.png", "assets/main/chars/virgilio/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/virgilio/normal/mouth_1.png", "assets/main/chars/virgilio/normal/mouth_2.png", "assets/main/chars/virgilio/normal/mouth_3.png"]
+        }
+      },
+      "smug": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 94, "y": 94 } },
+        "sprites": {
+          "body": "assets/main/chars/virgilio/smug/virgilio.png",
+          "eyes": ["assets/main/chars/virgilio/smug/virgilio.png"],
+          "mouth": ["assets/main/chars/virgilio/smug/mouth_1.png", "assets/main/chars/virgilio/smug/mouth_2.png", "assets/main/chars/virgilio/smug/mouth_3.png"]
+        }
+      },
+      "disappointed": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 96, "y": 97 } },
+        "sprites": {
+          "body": "assets/main/chars/virgilio/disappointed/virgilio.png",
+          "eyes": ["assets/main/chars/virgilio/disappointed/virgilio.png"],
+          "mouth": ["assets/main/chars/virgilio/disappointed/mouth_1.png", "assets/main/chars/virgilio/disappointed/mouth_2.png", "assets/main/chars/virgilio/disappointed/mouth_3.png"]
+        }
+      },
+      "serious": {
+        "offsets": { "eyes": { "x": 86, "y": 71 }, "mouth": { "x": 94, "y": 100 } },
+        "sprites": {
+          "body": "assets/main/chars/virgilio/serious/virgilio.png",
+          "eyes": ["assets/main/chars/virgilio/serious/eyes_1.png", "assets/main/chars/virgilio/serious/eyes_2.png", "assets/main/chars/virgilio/serious/eyes_3.png"],
+          "mouth": ["assets/main/chars/virgilio/serious/mouth_1.png", "assets/main/chars/virgilio/serious/mouth_2.png", "assets/main/chars/virgilio/serious/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "": {
+    "displayName": "",
+    "nameColor": "0xFFFFFF",
+    "speechFile": ""
+  }
+}
