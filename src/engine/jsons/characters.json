@@ -462,11 +462,11 @@
         }
       },
       "mask": {
-        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 1, "y": 1 } },
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0.1, "y": 0.1 } },
         "sprites": {
           "body": "assets/main/chars/dana/mask/dana.png",
           "eyes": ["assets/main/chars/dana/mask/dana.png"],
-          "mouth": []
+          "mouth": ["assets/main/chars/dana/mask/dana.png"]
         }
       }
     }
