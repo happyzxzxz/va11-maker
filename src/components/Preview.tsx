@@ -13,7 +13,7 @@ export const Preview = () => {
 
   useEffect(() => {
     let isMounted = true;
-    let renderer: SceneRenderer | null = null;
+    let rendererInstance: SceneRenderer | null = null;
     let observer: ResizeObserver | null = null;
 
     const setup = async () => {
@@ -28,7 +28,7 @@ export const Preview = () => {
         containerRef.current.innerHTML = '';
         containerRef.current.appendChild(r.app!.canvas);
 
-        renderer = r;
+        rendererInstance = r;
         rendererRef.current = r;
         setRenderer(r);
         setLoaded(true);
@@ -43,16 +43,13 @@ export const Preview = () => {
 
     setup();
 
-    const player = new ScriptPlayer(rendererRef.current, frames);
-    const controller = new GameController(rendererRef.current, player);
-
     return () => {
         isMounted = false;
         setLoaded(false);
 
         if (observer) observer.disconnect();
-        if (renderer) renderer.destroy();
-        if (controller) controller.destroy();
+        if (rendererInstance) rendererInstance.destroy();
+        
         rendererRef.current = null;
         setRenderer(null);
 
@@ -60,20 +57,23 @@ export const Preview = () => {
             containerRef.current.innerHTML = '';
         }
     };
-}, []);
+  }, []);
 
 
   useEffect(() => {
+    const renderer = rendererRef.current;
+    if (!renderer || !loaded) return;
+
     // 1. If we are NOT playing, use the Editor logic (Instant updates)
-    if (!isPlaying && rendererRef.current && loaded) {
-      rendererRef.current.stopMusic();
+    if (!isPlaying) {
+      renderer.stopMusic();
 
       const frame = frames[currentIndex];
       const speakerProfile = (characterData as any)[frame.speaker.id];
       
-      rendererRef.current.setBackground(frame.background);
-      rendererRef.current.updateCharacters(frame.characters);
-      rendererRef.current.setDialogueInstant(
+      renderer.setBackground(frame.background);
+      renderer.updateCharacters(frame.characters);
+      renderer.setDialogueInstant(
         frame.speaker.text,
         speakerProfile?.displayName || frame.speaker.id,
         speakerProfile?.nameColor || "0xFFFFFF"
@@ -81,57 +81,54 @@ export const Preview = () => {
     }
 
     // 2. If we ARE playing, we let ScriptPlayer take the wheel
-    if (isPlaying && rendererRef.current && loaded) {
-
+    if (isPlaying) {
       const activeSongs = playlist.filter((id): id is string => id !== null);
-      rendererRef.current.startPlaylist(activeSongs);
+      renderer.startPlaylist(activeSongs);
 
-      const player = new ScriptPlayer(rendererRef.current, frames);
-      const controller = new GameController(rendererRef.current, player);
+      const player = new ScriptPlayer(renderer, frames);
+      const controller = new GameController(renderer, player);
 
-      rendererRef.current.populateLoadMenu(frames.length);
+      renderer.populateLoadMenu(frames.length);
 
       player.startFrom(currentIndex); 
 
-      rendererRef.current.onExitRequest = () => {
+      renderer.onExitRequest = () => {
         setIsPlaying(false);
       };
 
-      rendererRef.current.onJumpRequest = (index: number) => {
+      renderer.onJumpRequest = (index: number) => {
         player.jumpToFrame(index);
       };
 
       return () => {
-        if (controller) controller.destroy();
+        controller.destroy();
       };
     }
-  }, [frames, currentIndex, loaded, isPlaying]);
+  }, [frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying]);
 
   useEffect(() => {
-  const handleEsc = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') setIsPlaying(false);
-  };
-  
-  if (isPlaying) {
-    window.addEventListener('keydown', handleEsc);
-  }
-  
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsPlaying(false);
+    };
+    
+    if (isPlaying) {
+      window.addEventListener('keydown', handleEsc);
+    }
+    
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isPlaying]);
+  }, [isPlaying, setIsPlaying]);
 
   return (
-    <div className={`relative bg-black flex items-center justify-center ${
-    isPlaying ? 'w-screen h-screen' : 'aspect-video w-full max-w-[900px] border border-zinc-800'
-  }`}>
+    <div className={`relative bg-black flex items-center justify-center transition-all duration-500 ${
+      isPlaying ? 'w-screen h-screen' : 'aspect-video w-full max-w-[900px] border border-zinc-800'
+    }`}>
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center text-zinc-500 text-[10px] tracking-widest">
-          LOADING...
+          CONNECTING TO BTC-7...
         </div>
       )}
       
-      {/* The Pixi Container */}
       <div ref={containerRef} className="w-full h-full" />
-      
     </div>
   );
 };
