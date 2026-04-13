@@ -187,11 +187,13 @@ export class Character {
 
     private startBlinkingLoop() {
         if (!this.eyeAnim) return;
+
+        const eye = this.eyeAnim; 
         
         const nextBlink = Math.random() * 8000 + 2000;
         this.blinkTimeout = window.setTimeout(() => {
-            this.eyeAnim.visible = true;
-            this.eyeAnim.gotoAndPlay(0);
+            eye.visible = true;
+            eye.gotoAndPlay(0);
             this.startBlinkingLoop();
         }, nextBlink);
     }

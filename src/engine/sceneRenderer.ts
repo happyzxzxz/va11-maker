@@ -222,23 +222,23 @@ export class SceneRenderer {
 
         this.dialogueClickArea.on('pointerenter', () => {
             this.isOverDialogue = true;
-            this.customCursor.visible = true;
+            this.customCursor!.visible = true;
 
-            this.app.canvas.style.cursor = 'none';
+            this.app!.canvas.style.cursor = 'none';
         });
 
         this.dialogueClickArea.on('pointerleave', () => {
             this.isOverDialogue = false;
-            this.customCursor.visible = false;
-            this.app.canvas.style.cursor = 'auto';
+            this.customCursor!.visible = false;
+            this.app!.canvas.style.cursor = 'auto';
 
             const styles = this.app!.renderer.events.cursorStyles as any;
             this.app!.canvas.style.cursor = styles.va11;
         });
 
-        this.app.stage.eventMode = 'static';
+        this.app!.stage.eventMode = 'static';
         
-        this.app.stage.on('globalpointermove', (event) => {
+        this.app!.stage.on('globalpointermove', (event) => {
             if (this.isOverDialogue) {
 
                 // calculate position relative to mainContainer.
@@ -448,7 +448,7 @@ export class SceneRenderer {
         const loadPromises: Promise<any>[] = [];
         const characterConfigs: any = {};
 
-        for (const [slot, data] of Object.entries(newCharacters)) {
+        for (const [_slot, data] of Object.entries(newCharacters)) {
             if (data) {
                 const charEntry = (characterData as any)[data.id]; 
                 const pose = (charEntry as any).poses[data.pose];

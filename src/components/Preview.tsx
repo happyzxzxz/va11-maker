@@ -43,12 +43,16 @@ export const Preview = () => {
 
     setup();
 
+    const player = new ScriptPlayer(rendererRef.current, frames);
+    const controller = new GameController(rendererRef.current, player);
+
     return () => {
         isMounted = false;
         setLoaded(false);
 
         if (observer) observer.disconnect();
         if (renderer) renderer.destroy();
+        if (controller) controller.destroy();
         rendererRef.current = null;
         setRenderer(null);
 
@@ -61,7 +65,6 @@ export const Preview = () => {
 
   useEffect(() => {
     // 1. If we are NOT playing, use the Editor logic (Instant updates)
-    let controller: GameController | null = null;
     if (!isPlaying && rendererRef.current && loaded) {
       rendererRef.current.stopMusic();
 

@@ -10,7 +10,7 @@ import { GameController } from './gameController';
     await renderer.init();
 
     renderer.app!.renderer.events.cursorStyles.va11 = "url('/assets/main/cursor.webp'), auto";
-    renderer.app!.canvas.style.cursor = renderer.app.renderer.events.cursorStyles.va11;
+    renderer.app!.canvas.style.cursor = (renderer.app!.renderer.events.cursorStyles as any).va11;
 
     Assets.add({ alias: 'border', src: 'assets/main/border.png' });
     Assets.add({ alias: 'font', src: 'assets/main/fonts/CyberpunkWaifus.fnt' });
