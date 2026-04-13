@@ -232,7 +232,8 @@ export class SceneRenderer {
             this.customCursor.visible = false;
             this.app.canvas.style.cursor = 'auto';
 
-            this.app.canvas.style.cursor = this.app.renderer.events.cursorStyles.va11;
+            const styles = this.app!.renderer.events.cursorStyles as any;
+            this.app!.canvas.style.cursor = styles.va11;
         });
 
         this.app.stage.eventMode = 'static';
