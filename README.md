@@ -3,6 +3,8 @@
 This is basically [VA-11 HALL-A](https://store.steampowered.com/app/447530/VA11_HallA_Cyberpunk_Bartender_Action/) visual novel, but in browser. You can write your own scripts using almost all characters from the original game, export your projects as json to send it to your friends or just straight up make a webm out of it with only one button.
 Keep in mind that this project may have bugs.
 
+![Screenshot](https://raw.githubusercontent.com/happyzxzxz/va11-maker/refs/heads/main/screenshots/1.png)
+
 ## Installation
 
 1. Clone the repo
