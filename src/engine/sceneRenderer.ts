@@ -46,7 +46,7 @@ export class SceneRenderer {
     private currentSpeechSound: string = 'speechHigh';
     private currentBgKey: string = "";
     
-    private dialogueClickArea!: Graphics;
+    public dialogueClickArea!: Graphics;
     private nextArrow!: Sprite;
     private customCursor!: AnimatedSprite;
 
@@ -126,7 +126,7 @@ export class SceneRenderer {
 
         TextureSource.defaultOptions.scaleMode = 'nearest';
 
-        this.app.renderer.events.cursorStyles.va11 = "url('assets/main/cursor.webp'), auto";
+        this.app!.renderer.events.cursorStyles.va11 = "url('assets/main/cursor.webp'), auto";
 
         await Assets.load([
             { alias: 'CyberpunkWaifus', src: 'assets/main/fonts/CyberpunkWaifus.fnt' },
@@ -150,7 +150,7 @@ export class SceneRenderer {
         this.mainContainer.addChild(this.charLayer);
         this.mainContainer.addChild(this.uiLayer);
         this.mainContainer.addChild(this.textLayer);
-        this.app.stage.addChild(this.mainContainer);
+        this.app!.stage.addChild(this.mainContainer);
 
         window.addEventListener('resize', () => this.resize());
         this.resize();
@@ -163,7 +163,7 @@ export class SceneRenderer {
         this.setupJukeboxPlayer();
         this.isReady = true;
 
-        this.app.canvas.style.cursor = this.app.renderer.events.cursorStyles.va11;
+        this.app!.canvas.style.cursor = this.app.renderer.events.cursorStyles.va11;
 
     }
 
@@ -388,7 +388,7 @@ export class SceneRenderer {
 
         this.bgLayer.removeChildren();
 
-        const config = bgConfigs[bgKey];
+        const config = (bgConfigs as any)[bgKey];
 
         const baseTexture = await Assets.load(config.base);
         const baseSprite = new Sprite(baseTexture);
@@ -397,7 +397,7 @@ export class SceneRenderer {
 
         if (config.animations) {
             for (const animData of config.animations) {
-                const textures = await Promise.all(animData.frames.map(f => Assets.load(f)));
+                const textures = await Promise.all(animData.frames.map((f: string) => Assets.load(f)));
                 const anim = new AnimatedSprite(textures);
                 anim.x = animData.x;
                 anim.y = animData.y;
@@ -415,7 +415,7 @@ export class SceneRenderer {
     }
 
     private async createTV(data: any) {
-        const textures = await Promise.all(data.channels.map(c => Assets.load(c)));
+        const textures = await Promise.all(data.channels.map((c: string) => Assets.load(c)));
         let currentChannel = 0;
 
         const tvSprite = new Sprite(textures[currentChannel]);
@@ -449,7 +449,7 @@ export class SceneRenderer {
 
         for (const [slot, data] of Object.entries(newCharacters)) {
             if (data) {
-                const charEntry = characterData[data.id as keyof typeof characterData];
+                const charEntry = (characterData as any)[data.id]; 
                 const pose = (charEntry as any).poses[data.pose];
                 
                 loadPromises.push(loadPoseTextures(pose).then(tex => {

@@ -7,6 +7,8 @@ export class ScriptPlayer {
     private currentFrameIndex: number = -1;
     private isBusyRendering: boolean = false;
 
+    public onComplete?: () => void; 
+
     constructor(renderer: SceneRenderer, script: any[]) {
         this.renderer = renderer;
         this.frames = script;

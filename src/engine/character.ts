@@ -28,7 +28,7 @@ export class Character {
 
     private body: Sprite;
     private eyeAnim: AnimatedSprite | null = null;
-    private mouthAnim: AnimatedSprite;
+    private mouthAnim: AnimatedSprite | null = null;
     private characterAnim: AnimatedSprite | null = null;
     private staticCharAnim: Sprite | null = null;
     private animIntervalTimeout: number | null = null;

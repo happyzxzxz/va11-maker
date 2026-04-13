@@ -9,8 +9,8 @@ import { GameController } from './gameController';
     const renderer = new SceneRenderer(1366, 768);
     await renderer.init();
 
-    renderer.app.renderer.events.cursorStyles.va11 = "url('/assets/main/cursor.webp'), auto";
-    renderer.app.canvas.style.cursor = renderer.app.renderer.events.cursorStyles.va11;
+    renderer.app!.renderer.events.cursorStyles.va11 = "url('/assets/main/cursor.webp'), auto";
+    renderer.app!.canvas.style.cursor = renderer.app.renderer.events.cursorStyles.va11;
 
     Assets.add({ alias: 'border', src: 'assets/main/border.png' });
     Assets.add({ alias: 'font', src: 'assets/main/fonts/CyberpunkWaifus.fnt' });
@@ -24,7 +24,7 @@ import { GameController } from './gameController';
     const script = await (await fetch('/assets/data/script.json')).json();
 
     const player = new ScriptPlayer(renderer, script);
-    const controller = new GameController(renderer, player);
+    new GameController(renderer, player);
 
     player.next();
 
