@@ -1016,7 +1016,6 @@ export class SceneRenderer {
         this.scanlineButton.x = 960; 
         this.scanlineButton.y = 605;
         this.scanlineButton.eventMode = 'static';
-        this.scanlineButton.cursor = 'pointer';
 
         this.scanlineButton.on('pointerdown', (e) => {
             e.stopPropagation();
