@@ -1,5 +1,4 @@
 import { SceneRenderer } from "./sceneRenderer";
-import characterData from './jsons/characters.json';
 import { getCharacterEntry } from './utils/characterLookup';
 
 export class ScriptPlayer {

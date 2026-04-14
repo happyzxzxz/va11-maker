@@ -1,6 +1,5 @@
 import { Application, Container, Sprite, Assets, Texture, Graphics, BitmapText, AnimatedSprite, TextureSource } from 'pixi.js';
 import { Character } from './character';
-import characterData from './jsons/characters.json';
 import bgConfigs from './jsons/backgrounds.json';
 import { loadPoseTextures } from './utils/loadPoseTextures';
 import { sound } from '@pixi/sound';
