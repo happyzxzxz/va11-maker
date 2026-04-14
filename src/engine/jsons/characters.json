@@ -432,6 +432,40 @@
           "animSpeed": 0.15,
           "animInterval": { "min": 5000, "max": 7000 }
         }
+      },
+      "concerned eyes left": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/concerned eyes left/anna.png",
+          "eyes": ["assets/main/chars/anna/concerned eyes left/eyes_1.png", "assets/main/chars/anna/concerned eyes left/eyes_2.png", "assets/main/chars/anna/concerned eyes left/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/concerned eyes left/mouth_1.png", "assets/main/chars/anna/concerned eyes left/mouth_2.png", "assets/main/chars/anna/concerned eyes left/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/concerned eyes left/glitch_1.png",
+            "assets/main/chars/anna/concerned eyes left/glitch_2.png",
+            "assets/main/chars/anna/concerned eyes left/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "concerned eyes right": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/concerned eyes right/anna.png",
+          "eyes": ["assets/main/chars/anna/concerned eyes right/eyes_1.png", "assets/main/chars/anna/concerned eyes right/eyes_2.png", "assets/main/chars/anna/concerned eyes right/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/concerned eyes right/mouth_1.png", "assets/main/chars/anna/concerned eyes right/mouth_2.png", "assets/main/chars/anna/concerned eyes right/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/concerned eyes right/glitch_1.png",
+            "assets/main/chars/anna/normal/glitch_2.png",
+            "assets/main/chars/anna/concerned eyes right/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
       }
     }
   },
