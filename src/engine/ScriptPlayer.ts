@@ -1,5 +1,6 @@
 import { SceneRenderer } from "./sceneRenderer";
 import characterData from './jsons/characters.json';
+import { getCharacterEntry } from './utils/characterLookup';
 
 export class ScriptPlayer {
     private renderer: SceneRenderer;
@@ -32,14 +33,14 @@ export class ScriptPlayer {
 
     private async renderFrame(frame: any) {
         const speakerId = frame.speaker.id;
-        const speakerProfile = (characterData as any)[speakerId];
+        const speakerProfile = getCharacterEntry(speakerId);
 
         let voiceAlias = '';
         if (speakerProfile?.speechFile) {
             voiceAlias = speakerProfile.speechFile;
         };
 
-        const displayName = speakerProfile?.displayName || speakerId;
+        const displayName = speakerProfile?.displayName || speakerId || "???";
         const nameColor = speakerProfile?.nameColor || "0xFFFFFF";
 
         this.renderer.prepareForNewFrame(

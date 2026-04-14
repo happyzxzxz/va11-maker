@@ -160,8 +160,22 @@ export default function Maker() {
                         {Object.keys(characterData).map(id => ((characterData as any)[id].poses && <option key={id} value={id}>{id}</option>))}
                       </select>
                       {charInSlot && (
-                        <select value={charInSlot.pose} onChange={(e) => updatePose(slot, e.target.value)} className="w-full bg-zinc-950 border border-zinc-800 p-2 text-[10px] text-cyan-500 outline-none">
-                          {Object.keys((characterData as any)[charInSlot.id].poses).map(pose => (<option key={pose} value={pose}>{pose.toUpperCase()}</option>))}
+                        <select 
+                          value={charInSlot.pose}
+                          onChange={(e) => updatePose(slot, e.target.value)}
+                          className="w-full bg-zinc-950 border border-zinc-800 p-2 text-[10px] text-cyan-500 outline-none"
+                        >
+                          {(() => {
+                            const charEntry = (characterData as any)[charInSlot.id];
+                            
+                            if (charEntry && charEntry.poses) {
+                              return Object.keys(charEntry.poses).map(pose => (
+                                <option key={pose} value={pose}>{pose.toUpperCase()}</option>
+                              ));
+                            }
+                            
+                            return <option value="">INVALID CHARACTER ID</option>;
+                          })()}
                         </select>
                       )}
                    </div>

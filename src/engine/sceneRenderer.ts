@@ -6,6 +6,7 @@ import { loadPoseTextures } from './utils/loadPoseTextures';
 import { sound } from '@pixi/sound';
 import songData from './jsons/songs.json';
 import gsap from 'gsap';
+import { getCharacterEntry } from './utils/characterLookup';
 
 
 interface Slot {
@@ -450,7 +451,7 @@ export class SceneRenderer {
 
         for (const [_slot, data] of Object.entries(newCharacters)) {
             if (data) {
-                const charEntry = (characterData as any)[data.id]; 
+                const charEntry = getCharacterEntry(data.id); 
                 const pose = (charEntry as any).poses[data.pose];
                 
                 loadPromises.push(loadPoseTextures(pose).then(tex => {
