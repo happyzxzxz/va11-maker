@@ -1,12 +1,12 @@
 {
-  "dorothy": {
+  "Dorothy": {
     "displayName": "Dorothy",
     "nameColor": "#FF2FCB",
     "baseScale": 2.15,
     "speechFile": "speechHigh",
     "poses": {
       "normal": {
-        "offsets": { "eyes": { "x": 19, "y": 34 }, "mouth": { "x": 41, "y": 73 } },
+        "offsets": { "eyes": { "x": 21, "y": 31 }, "mouth": { "x": 41, "y": 74 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/normal/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/normal/eyes_1.png", "assets/main/chars/dorothy/normal/eyes_2.png", "assets/main/chars/dorothy/normal/eyes_3.png"],
@@ -45,7 +45,7 @@
         }
       },
       "sad": {
-        "offsets": { "eyes": { "x": 21, "y": 39 }, "mouth": { "x": 38, "y": 75 } },
+        "offsets": { "eyes": { "x": 21, "y": 38 }, "mouth": { "x": 38, "y": 75 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/sad/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/sad/eyes_1.png", "assets/main/chars/dorothy/sad/eyes_2.png", "assets/main/chars/dorothy/sad/eyes_3.png"],
@@ -93,7 +93,7 @@
         }
       },
       "drunk": {
-        "offsets": { "eyes": { "x": 16, "y": 48 }, "mouth": { "x": 37, "y": 77 } },
+        "offsets": { "eyes": { "x": 16, "y": 48 }, "mouth": { "x": 37, "y": 77 }, "characterAnim": { "x": 1, "y": -8 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/drunk/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/drunk/eyes_1.png", "assets/main/chars/dorothy/drunk/eyes_2.png", "assets/main/chars/dorothy/drunk/eyes_3.png"],
@@ -101,22 +101,38 @@
            "assets/main/chars/dorothy/drunk/mouth_1.png",
            "assets/main/chars/dorothy/drunk/mouth_2.png",
            "assets/main/chars/dorothy/drunk/mouth_3.png"
-          ]
+          ],
+          "characterAnim": [
+            "assets/main/chars/dorothy/drunk/anim1.png",
+            "assets/main/chars/dorothy/drunk/anim2.png",
+            "assets/main/chars/dorothy/drunk/anim3.png"
+          ],
+          "staticCharAnim": "assets/main/chars/dorothy/drunk/anim1.png",
+          "animSpeed": 0.05,
+          "animInterval": { "min": 50, "max": 50 }
         }
       },
       "wah": {
-        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 39, "y": 72 } },
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 39, "y": 72 }, "characterAnim": { "x": 8, "y": 0 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/wah/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/wah/dorothy.png"],
           "mouth": [
            "assets/main/chars/dorothy/wah/mouth_1.png",
            "assets/main/chars/dorothy/wah/mouth_2.png"
-          ]
+          ],
+          "characterAnim": [
+            "assets/main/chars/dorothy/wah/wah1.png",
+            "assets/main/chars/dorothy/wah/wah2.png",
+            "assets/main/chars/dorothy/wah/wah3.png"
+          ],
+          "staticCharAnim": "assets/main/chars/dorothy/wah/wah1.png",
+          "animSpeed": 0.05,
+          "animInterval": { "min": 50, "max": 50 }
         }
       },
       "crying": {
-        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0, "y": 0 }, "characterAnim": { "x": 0, "y": 0 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/crying/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/crying/dorothy.png"],
@@ -132,7 +148,7 @@
         }
       },
       "heart": {
-        "offsets": { "eyes": { "x": 19, "y": 34 }, "mouth": { "x": 41, "y": 73 } },
+        "offsets": { "eyes": { "x": 19, "y": 36 }, "mouth": { "x": 41, "y": 73 } },
         "sprites": {
           "body": "assets/main/chars/dorothy/heart/dorothy.png",
           "eyes": ["assets/main/chars/dorothy/heart/eyes_1.png", "assets/main/chars/dorothy/heart/eyes_2.png", "assets/main/chars/dorothy/heart/eyes_3.png"],
@@ -141,7 +157,7 @@
       }
     }
   },
-  "gillian": {
+  "Gillian": {
     "displayName": "Gillian",
     "nameColor": "#6B328A",
     "speechFile": "speechLow",
@@ -189,7 +205,7 @@
       }
     }
   },
-  "kira": {
+  "Kira": {
     "displayName": "*Kira* Miki",
     "nameColor": "#B82293",
     "speechFile": "speechHigh",
@@ -221,7 +237,7 @@
       }
     }
   },
-  "alma": {
+  "Alma": {
     "displayName": "Alma",
     "nameColor": "#DECC57",
     "speechFile": "speechHigh",
@@ -309,7 +325,7 @@
       }
     }
   },
-  "anna": {
+  "Anna": {
     "displayName": "Anna",
     "nameColor": "0xFFFFFF",
     "speechFile": "speechHigh",
@@ -327,6 +343,74 @@
             "assets/main/chars/anna/normal/glitch_1.png",
             "assets/main/chars/anna/normal/glitch_2.png",
             "assets/main/chars/anna/normal/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "light smile": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/light smile/anna.png",
+          "eyes": ["assets/main/chars/anna/light smile/eyes_1.png", "assets/main/chars/anna/light smile/eyes_2.png", "assets/main/chars/anna/light smile/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/light smile/mouth_1.png", "assets/main/chars/anna/light smile/mouth_2.png", "assets/main/chars/anna/light smile/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/light smile/glitch_1.png",
+            "assets/main/chars/anna/light smile/glitch_2.png",
+            "assets/main/chars/anna/light smile/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "light smile eyes left": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/light smile eyes left/anna.png",
+          "eyes": ["assets/main/chars/anna/light smile eyes left/eyes_1.png", "assets/main/chars/anna/light smile eyes left/eyes_2.png", "assets/main/chars/anna/light smile eyes left/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/light smile eyes left/mouth_1.png", "assets/main/chars/anna/light smile eyes left/mouth_2.png", "assets/main/chars/anna/light smile eyes left/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/light smile eyes left/glitch_1.png",
+            "assets/main/chars/anna/light smile eyes left/glitch_2.png",
+            "assets/main/chars/anna/light smile eyes left/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "eyes left brows up": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/eyes left brows up/anna.png",
+          "eyes": ["assets/main/chars/anna/eyes left brows up/eyes_1.png", "assets/main/chars/anna/eyes left brows up/eyes_2.png", "assets/main/chars/anna/eyes left brows up/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/eyes left brows up/mouth_1.png", "assets/main/chars/anna/eyes left brows up/mouth_2.png", "assets/main/chars/anna/eyes left brows up/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/eyes left brows up/glitch_1.png",
+            "assets/main/chars/anna/eyes left brows up/glitch_2.png",
+            "assets/main/chars/anna/eyes left brows up/glitch_3.png"
+          ],
+          "animSpeed": 0.15,
+          "animInterval": { "min": 5000, "max": 7000 }
+        }
+      },
+      "eyes left": {
+        "offsets": { "eyes": { "x": 21, "y": 50 }, "mouth": { "x": 41, "y": 80 }, "characterAnim": { "x": -0.5, "y": 0 } },
+        "sprites": {
+          "body": "assets/main/chars/anna/eyes left/anna.png",
+          "eyes": ["assets/main/chars/anna/eyes left/eyes_1.png", "assets/main/chars/anna/eyes left/eyes_2.png", "assets/main/chars/anna/eyes left/eyes_3.png"],
+          "mouth": [
+            "assets/main/chars/anna/eyes left/mouth_1.png", "assets/main/chars/anna/eyes left/mouth_2.png", "assets/main/chars/anna/eyes left/mouth_3.png"
+          ],
+          "characterAnim": [
+            "assets/main/chars/anna/eyes left/glitch_1.png",
+            "assets/main/chars/anna/eyes left/glitch_2.png",
+            "assets/main/chars/anna/eyes left/glitch_3.png"
           ],
           "animSpeed": 0.15,
           "animInterval": { "min": 5000, "max": 7000 }
@@ -351,7 +435,128 @@
       }
     }
   },
-  "art": {
+  "Cass": {
+    "displayName": "Cass",
+    "nameColor": "#84658F",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 24, "y": 25 }, "mouth": { "x": 30, "y": 43 } },
+        "sprites": {
+          "body": "assets/main/chars/cass/normal/cass.png",
+          "eyes": ["assets/main/chars/cass/normal/eyes_1.png", "assets/main/chars/cass/normal/eyes_2.png", "assets/main/chars/cass/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/cass/normal/mouth_1.png", "assets/main/chars/cass/normal/mouth_2.png", "assets/main/chars/cass/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "Nacho": {
+    "displayName": "Nacho",
+    "nameColor": "#985D70",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 20, "y": 29 }, "mouth": { "x": 33, "y": 55 } },
+        "sprites": {
+          "body": "assets/main/chars/nacho/normal/nacho.png",
+          "eyes": ["assets/main/chars/nacho/normal/eyes_1.png", "assets/main/chars/nacho/normal/eyes_2.png", "assets/main/chars/nacho/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/nacho/normal/mouth_1.png", "assets/main/chars/nacho/normal/mouth_2.png"]
+        }
+      }
+    }
+  },
+  "Essentia": {
+    "displayName": "Essentia",
+    "nameColor": "#B0CB95",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 2, "y": 32 }, "mouth": { "x": 15, "y": 69 } },
+        "sprites": {
+          "body": "assets/main/chars/essentia/normal/essentia.png",
+          "eyes": ["assets/main/chars/essentia/normal/eyes_1.png", "assets/main/chars/essentia/normal/eyes_2.png", "assets/main/chars/essentia/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/essentia/normal/mouth_1.png", "assets/main/chars/essentia/normal/mouth_2.png", "assets/main/chars/essentia/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "Vella": {
+    "displayName": "'Vella'",
+    "nameColor": "#F4C0B7",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 78, "y": 46 }, "mouth": { "x": 87, "y": 77 } },
+        "sprites": {
+          "body": "assets/main/chars/vella/normal/vella.png",
+          "eyes": ["assets/main/chars/vella/normal/eyes_1.png", "assets/main/chars/vella/normal/eyes_2.png", "assets/main/chars/vella/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/vella/normal/mouth_1.png", "assets/main/chars/vella/normal/mouth_2.png", "assets/main/chars/vella/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "Lexi": {
+    "displayName": "Lexi",
+    "nameColor": "#25AAFF",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 72, "y": 47 }, "mouth": { "x": 77, "y": 88 } },
+        "sprites": {
+          "body": "assets/main/chars/lexi/normal/lexi.png",
+          "eyes": ["assets/main/chars/lexi/normal/eyes_1.png", "assets/main/chars/lexi/normal/eyes_2.png", "assets/main/chars/lexi/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/lexi/normal/mouth_1.png", "assets/main/chars/lexi/normal/mouth_2.png", "assets/main/chars/lexi/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "Tomcat": {
+    "displayName": "TOMCAT",
+    "nameColor": "#FFEEB4",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 39, "y": 71 }, "mouth": { "x": 53, "y": 102 } },
+        "sprites": {
+          "body": "assets/main/chars/tomcat/normal/tomcat.png",
+          "eyes": ["assets/main/chars/tomcat/normal/eyes_1.png", "assets/main/chars/tomcat/normal/eyes_2.png", "assets/main/chars/tomcat/normal/eyes_3.png"],
+          "mouth": ["assets/main/chars/tomcat/normal/mouth_1.png", "assets/main/chars/tomcat/normal/mouth_2.png", "assets/main/chars/tomcat/normal/mouth_3.png"]
+        }
+      }
+    }
+  },
+  "Jess": {
+    "displayName": "Jess",
+    "nameColor": "#F6617B",
+    "speechFile": "speechHigh",
+    "baseScale": 2.15,
+    "poses": {
+      "normal": {
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 74, "y": 5 }, "characterAnim": { "x": 0, "y": -109 } },
+        "sprites": {
+          "body": "assets/main/chars/jess/normal/jess.png",
+          "eyes": ["assets/main/chars/jess/normal/jess.png"],
+          "mouth": ["assets/main/chars/jess/normal/mouth_1.png", "assets/main/chars/jess/normal/mouth_2.png", "assets/main/chars/jess/normal/mouth_3.png"],
+          "characterAnim": [
+            "assets/main/chars/jess/normal/ears_1.png",
+            "assets/main/chars/jess/normal/ears_2.png",
+            "assets/main/chars/jess/normal/ears_3.png",
+            "assets/main/chars/jess/normal/ears_4.png"
+          ],
+          "animSpeed": 0.08,
+          "animInterval": { "min": 5000, "max": 7000 },
+          "staticCharAnim": "assets/main/chars/jess/normal/ears_1.png"
+        }
+      }
+    }
+  },
+  "Art": {
     "displayName": "Art",
     "nameColor": "#5B595C",
     "speechFile": "speechHigh",
@@ -375,7 +580,7 @@
       }
     }
   },
-  "betty": {
+  "Betty": {
     "displayName": "Betty",
     "nameColor": "#60EF36",
     "speechFile": "speechHigh",
@@ -415,7 +620,7 @@
       }
     }
   },
-  "brian": {
+  "Brian": {
     "displayName": "Brian",
     "nameColor": "#CFAC57",
     "speechFile": "speechLow",
@@ -431,7 +636,7 @@
       }
     }
   },
-  "dana": {
+  "Dana": {
     "displayName": "Dana",
     "nameColor": "#B23F50",
     "speechFile": "speechHigh",
@@ -471,7 +676,7 @@
       }
     }
   },
-  "deal": {
+  "Deal": {
     "displayName": "Deal",
     "nameColor": "#D1F096",
     "speechFile": "speechLow",
@@ -487,7 +692,7 @@
       }
     }
   },
-  "shiba": {
+  "Shiba": {
     "displayName": "Rad Shiba",
     "nameColor": "#9FA268",
     "speechFile": "speechHigh",
@@ -503,7 +708,7 @@
       }
     }
   },
-  "donovan": {
+  "Donovan": {
     "displayName": "Mr. Donovan",
     "nameColor": "#9A4756",
     "speechFile": "speechLow",
@@ -527,7 +732,7 @@
       }
     }
   },
-  "gaby": {
+  "Gaby": {
     "displayName": "Gaby",
     "nameColor": "#736465",
     "speechFile": "speechHigh",
@@ -583,7 +788,7 @@
       }
     }
   },
-  "ingram": {
+  "Ingram": {
     "displayName": "Ingram",
     "nameColor": "#E54712",
     "speechFile": "speechLow",
@@ -599,7 +804,7 @@
       }
     }
   },
-  "jamie": {
+  "Jamie": {
     "displayName": "Jamie",
     "nameColor": "#85865B",
     "speechFile": "speechLow",
@@ -631,7 +836,7 @@
       }
     }
   },
-  "jill": {
+  "Jill": {
     "displayName": "Jill",
     "nameColor": "#5E6FAB",
     "speechFile": "speechHigh",
@@ -679,7 +884,7 @@
       }
     }
   },
-  "kim": {
+  "Kim": {
     "displayName": "Kim",
     "nameColor": "#9B76A2",
     "speechFile": "speechHigh",
@@ -711,7 +916,7 @@
       }
     }
   },
-  "mario": {
+  "Mario": {
     "displayName": "Mario",
     "nameColor": "#8D0928",
     "speechFile": "speechHigh",
@@ -751,7 +956,7 @@
       }
     }
   },
-  "norma": {
+  "Norma": {
     "displayName": "Norma", 
     "nameColor": "#FAFAFA",
     "speechFile": "speechHigh",
@@ -767,7 +972,7 @@
       }
     }
   },
-  "sei": {
+  "Sei": {
     "displayName": "Sei", 
     "nameColor": "#619696",
     "speechFile": "speechHigh",
@@ -830,7 +1035,7 @@
         }
       },
       "mask": {
-        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0.1, "y": 0.1 } },
+        "offsets": { "eyes": { "x": 0, "y": 0 }, "mouth": { "x": 0.1, "y": 0.1 }, "characterAnim": { "x": 0, "y": 0 } },
         "sprites": {
           "body": "assets/main/chars/sei/mask/sei.png",
           "eyes": ["assets/main/chars/sei/mask/sei.png"],
@@ -847,7 +1052,7 @@
       }
     }
   },
-  "stella": {
+  "Stella": {
     "displayName": "Stella", 
     "nameColor": "#D666B3",
     "speechFile": "speechHigh",
@@ -940,7 +1145,7 @@
       }
     }
   },
-  "streaming-chan": {
+  "Streaming-chan": {
     "displayName": "Streaming-chan", 
     "nameColor": "#3A8DB1",
     "speechFile": "speechHigh",
@@ -988,7 +1193,7 @@
       }
     }
   },
-  "taylor": {
+  "Taylor": {
     "displayName": "Taylor", 
     "nameColor": "#F9AEB0",
     "speechFile": "speechHigh",
@@ -1012,7 +1217,7 @@
       }
     }
   },
-  "virgilio": {
+  "Virgilio": {
     "displayName": "Virgilio", 
     "nameColor": "#675975",
     "speechFile": "speechHigh",

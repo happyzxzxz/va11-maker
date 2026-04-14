@@ -46,7 +46,7 @@ export class Character {
             this.eyeAnim = new AnimatedSprite(layers.eyes);
             this.eyeAnim.x = offsets.eyes.x;
             this.eyeAnim.y = offsets.eyes.y;
-            this.eyeAnim.animationSpeed = 0.15;
+            this.eyeAnim.animationSpeed = 0.01;
             this.eyeAnim.loop = false;
             this.eyeAnim.visible = false;
             this.eyeAnim.onComplete = () => { if (this.eyeAnim) this.eyeAnim.visible = false; };
@@ -125,6 +125,8 @@ export class Character {
     public updatePose(layers: CharacterLayers, offsets: FaceOffsets, options: CharacterOptions) {
         this.body.texture = layers.body;
 
+        this.view.pivot.set(this.body.texture.width / 2, this.body.texture.height);
+
         if (this.animIntervalTimeout) {
             window.clearTimeout(this.animIntervalTimeout);
             this.animIntervalTimeout = null;
@@ -151,36 +153,62 @@ export class Character {
             }
         }
 
-        if (this.characterAnim) {
-            if (layers.characterAnim && layers.characterAnim.length > 0) {
-                this.characterAnim.textures = layers.characterAnim;
-                this.characterAnim.x = offsets.characterAnim?.x || 0;
-                this.characterAnim.y = offsets.characterAnim?.y || 0;
-                this.characterAnim.animationSpeed = options.animSpeed || 0.05;
+        if (layers.characterAnim && layers.characterAnim.length > 0) {
 
-                if (this.staticCharAnim && layers.staticCharAnim) {
-                    this.staticCharAnim.texture = layers.staticCharAnim;
-                    this.staticCharAnim.x = offsets.characterAnim?.x || 0;
-                    this.staticCharAnim.y = offsets.characterAnim?.y || 0;
-                }
-
-                if (options.animInterval) {
-                    this.currentAnimInterval = options.animInterval;
-                    this.characterAnim.loop = false;
-                    this.characterAnim.visible = false;
-                    if (this.staticCharAnim) this.staticCharAnim.visible = true;
-                    this.scheduleNextAnim();
+            if (layers.staticCharAnim) {
+                if (!this.staticCharAnim) {
+                    this.staticCharAnim = new Sprite(layers.staticCharAnim);
+                    this.view.addChildAt(this.staticCharAnim, 1);
                 } else {
-                    this.currentAnimInterval = null;
-                    this.characterAnim.loop = true;
-                    this.characterAnim.visible = true;
-                    this.characterAnim.play();
-                    if (this.staticCharAnim) this.staticCharAnim.visible = false;
+                    this.staticCharAnim.texture = layers.staticCharAnim;
                 }
+                this.staticCharAnim.x = offsets.characterAnim?.x || 0;
+                this.staticCharAnim.y = offsets.characterAnim?.y || 0;
             } else {
+                if (this.staticCharAnim) {
+                    this.staticCharAnim.visible = false;
+                }
+            }
+
+            if (!this.characterAnim) {
+                this.characterAnim = new AnimatedSprite(layers.characterAnim);
+                this.view.addChild(this.characterAnim);
+            } else {
+                this.characterAnim.textures = layers.characterAnim;
+            }
+
+            this.characterAnim.x = offsets.characterAnim?.x || 0;
+            this.characterAnim.y = offsets.characterAnim?.y || 0;
+            this.characterAnim.animationSpeed = options.animSpeed || 0.05;
+
+            if (options.animInterval) {
+                this.currentAnimInterval = options.animInterval;
+                this.characterAnim.loop = false;
+                this.characterAnim.visible = false;
+                
+                this.characterAnim.onComplete = () => {
+                    if (this.characterAnim) this.characterAnim.visible = false;
+                    if (this.staticCharAnim && layers.staticCharAnim) this.staticCharAnim.visible = true;
+                    this.scheduleNextAnim();
+                };
+
+                if (this.staticCharAnim) this.staticCharAnim.visible = true;
+                this.scheduleNextAnim();
+            } else {
+                this.currentAnimInterval = null;
+                this.characterAnim.loop = true;
+                this.characterAnim.visible = true;
+                this.characterAnim.play();
+                if (this.staticCharAnim) this.staticCharAnim.visible = false;
+            }
+        } 
+        else {
+            if (this.characterAnim) {
                 this.characterAnim.stop();
                 this.characterAnim.visible = false;
-                if (this.staticCharAnim) this.staticCharAnim.visible = false;
+            }
+            if (this.staticCharAnim) {
+                this.staticCharAnim.visible = false;
             }
         }
     }
