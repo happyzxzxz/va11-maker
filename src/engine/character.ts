@@ -46,7 +46,7 @@ export class Character {
             this.eyeAnim = new AnimatedSprite(layers.eyes);
             this.eyeAnim.x = offsets.eyes.x;
             this.eyeAnim.y = offsets.eyes.y;
-            this.eyeAnim.animationSpeed = 0.01;
+            this.eyeAnim.animationSpeed = 0.15;
             this.eyeAnim.loop = false;
             this.eyeAnim.visible = false;
             this.eyeAnim.onComplete = () => { if (this.eyeAnim) this.eyeAnim.visible = false; };
