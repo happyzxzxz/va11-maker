@@ -66,6 +66,10 @@ export const useScriptStore = create<ScriptState>()(
             return state;
         }
 
+        if (state.renderer) {
+          state.renderer.stopMusic();
+        }
+
         return {
             frames: data.frames,
             playlist: data.playlist || Array(10).fill(null),

@@ -1,4 +1,4 @@
-import { Application, Container, Sprite, Assets, Texture, Graphics, BitmapText, AnimatedSprite, TextureSource } from 'pixi.js';
+import { Application, Container, Sprite, Assets, Texture, Graphics, BitmapText, AnimatedSprite, TextureSource, TilingSprite } from 'pixi.js';
 import { Character } from './character';
 import bgConfigs from './jsons/backgrounds.json';
 import { loadPoseTextures } from './utils/loadPoseTextures';
@@ -32,6 +32,7 @@ export class SceneRenderer {
     private dialogueText!: BitmapText;
     private currentTrackIndex: number = 0;
     private activePlaylist: string[] = [];
+    private scanlineOverlay!: TilingSprite;
     private charsPerSecond = 30;
     private typingAccumulator = 0;
     private typingActive = false;
@@ -56,6 +57,7 @@ export class SceneRenderer {
     private isOverDialogue: boolean = false;
     private isTyping: boolean = false;
     private skipRequested: boolean = false;
+    private showScanlines: boolean = false;
 
     private readonly MAX_TEXT_WIDTH = 700;
     private readonly MAX_TEXT_HEIGHT = 135;
@@ -83,6 +85,7 @@ export class SceneRenderer {
     private charLayer: Container;
     private uiLayer: Container;
     private textLayer: Container;
+    private scanlineButton!: Container;
 
     private currentNameColor: string = "0xFFFFFF";
     private currentPrefix: string = "";
@@ -156,6 +159,8 @@ export class SceneRenderer {
         this.resize();
 
         await this.setupDialogue(); 
+        this.setupScanlines();
+        this.setupScanlineButton();
         this.setupExitButton();
         this.setupLoadButton();
         this.setupLoadMenu(); 
@@ -318,6 +323,9 @@ export class SceneRenderer {
             this.finishTyping();
             return;
         }
+
+        const ctx = (sound.context as any).audioContext;
+        if (ctx.state === 'suspended') ctx.resume();
 
         this.isTyping = true;
         this.typingActive = true;
@@ -705,6 +713,11 @@ export class SceneRenderer {
     }
 
     public async startPlaylist(songIds: string[]) {
+        const context = sound.context as any;
+        if (context.audioContext.state === 'suspended') {
+            await context.audioContext.resume();
+        }
+
         if (songIds.length === 0) {
             this.stopMusic();
             return;
@@ -776,6 +789,8 @@ export class SceneRenderer {
     }
 
     public stopMusic() {
+        this.currentTrackAlias = null;
+        this.activePlaylist = [];
         sound.stopAll();
     }
     
@@ -962,6 +977,58 @@ export class SceneRenderer {
         try {
             sound.play('speechHigh', { volume: 0.01 });
         } catch (e) {}
+    }
+
+    private setupScanlines() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 4;
+        const ctx = canvas.getContext('2d')!;
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.fillRect(0, 0, 1, 2);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.fillRect(0, 2, 1, 2);
+
+        const texture = Texture.from(canvas);
+
+        this.scanlineOverlay = new TilingSprite({
+            texture,
+            width: this.GAME_WIDTH,
+            height: this.GAME_HEIGHT
+        });
+
+        this.scanlineOverlay.visible = false;
+        this.scanlineOverlay.eventMode = 'none';
+        
+        this.textLayer.addChild(this.scanlineOverlay);
+    }
+
+    private setupScanlineButton() {
+        this.scanlineButton = new Container();
+        const text = new BitmapText({
+            text: "Scanlines",
+            style: { fontFamily: "CyberpunkWaifus", fontSize: this.DEFAULT_FONT_SIZE }
+        });
+        this.scanlineButton.addChild(text);
+        
+        this.scanlineButton.x = 960; 
+        this.scanlineButton.y = 605;
+        this.scanlineButton.eventMode = 'static';
+        this.scanlineButton.cursor = 'pointer';
+
+        this.scanlineButton.on('pointerdown', (e) => {
+            e.stopPropagation();
+            this.toggleScanlines();
+        });
+
+        this.uiLayer.addChild(this.scanlineButton);
+    }
+
+    public toggleScanlines() {
+        this.showScanlines = !this.showScanlines;
+        this.scanlineOverlay.visible = this.showScanlines;
     }
 
     public destroy() {

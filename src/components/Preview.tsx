@@ -104,6 +104,9 @@ export const Preview = () => {
         controller.destroy();
       };
     }
+    else {
+      renderer.stopMusic();
+    }
   }, [frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying]);
 
   useEffect(() => {
