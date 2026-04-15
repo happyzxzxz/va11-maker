@@ -3,11 +3,7 @@ import { persist } from 'zustand/middleware';
 
 const DEFAULT_FRAME = {
   background: 'bar_night',
-  characters: {
-    left: null,
-    center: null,
-    right: null
-  },
+  characters: { left: [], center: [], right: [] },
   speaker: {
     id: '',
     text: '',
@@ -19,11 +15,17 @@ export interface Frame {
   id: string;
   background: string;
   characters: {
-    left: { id: string; pose: string } | null;
-    center: { id: string; pose: string } | null;
-    right: { id: string; pose: string } | null;
+    left: SlotCharacter[];
+    center: SlotCharacter[];
+    right: SlotCharacter[];
   };
   speaker: { id: string; text: string; mouthTarget: string | null };
+}
+
+export interface SlotCharacter {
+  id: string;
+  pose: string;
+  xOffset?: number;
 }
 
 interface ScriptState {
@@ -138,6 +140,35 @@ export const useScriptStore = create<ScriptState>()(
     
     {
       name: 'va11-maker-storage',
+      version: 1,
+
+      migrate: (persistedState: any, version: number) => {
+        if (version === 0) {
+          console.log("Migrating data to multi-character format...");
+          
+          if (persistedState.frames) {
+            persistedState.frames = persistedState.frames.map((frame: any) => {
+              const newChars: any = { left: [], center: [], right: [] };
+              
+              ['left', 'center', 'right'].forEach((slot) => {
+                const oldVal = frame.characters[slot];
+                
+                if (Array.isArray(oldVal)) {
+                  newChars[slot] = oldVal;
+                } else if (oldVal === null || oldVal === undefined) {
+                  newChars[slot] = [];
+                } else {
+                  newChars[slot] = [{ ...oldVal, xOffset: 0 }];
+                }
+              });
+              
+              return { ...frame, characters: newChars };
+            });
+          }
+        }
+        return persistedState;
+      },
+
       partialize: (state) => ({
         frames: state.frames,
         playlist: state.playlist,

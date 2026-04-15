@@ -9,11 +9,6 @@ import { useScriptStore } from '../store/useScriptStore';
 import characterData from './jsons/characters.json';
 
 
-interface Slot {
-    x: number;
-    char: Character | null;
-}
-
 export class SceneRenderer {
 
     private GAME_WIDTH: number;
@@ -28,11 +23,11 @@ export class SceneRenderer {
     private loopSprite!: Sprite;
     private shuffleSprite!: Sprite;
     private currentTrackAlias: string | null = null;
-    private slots: Record<string, Slot>;
+    private slots: Record<string, { x: number, instances: Character[] }>;
     private nameText!: BitmapText;
     private dialogueText!: BitmapText;
     private currentTrackIndex: number = 0;
-    private activePlaylist: string[] = [];
+    private activePlaylist: string[] =[];
     private scanlineOverlay!: TilingSprite;
     private charsPerSecond = 30;
     private typingAccumulator = 0;
@@ -103,9 +98,9 @@ export class SceneRenderer {
         this.exitButton = new Container();
 
         this.slots = {
-            left: { x: this.LEFT_SLOT_X, char: null },
-            center: {x: this.CENTER_SLOT_X, char: null},
-            right: { x: this.RIGHT_SLOT_X, char: null }
+            left: { x: this.LEFT_SLOT_X, instances:[] },
+            center: { x: this.CENTER_SLOT_X, instances:[] },
+            right: { x: this.RIGHT_SLOT_X, instances:[] }
         };
     }
 
@@ -175,7 +170,7 @@ export class SceneRenderer {
 
     public async setupDialogue() {
 
-        const cursorFrames = [
+        const cursorFrames =[
             await Assets.load('assets/main/dialogue-cursor-1.png'),
             await Assets.load('assets/main/dialogue-cursor-2.png'),
             await Assets.load('assets/main/dialogue-cursor-3.png'),
@@ -338,7 +333,12 @@ export class SceneRenderer {
         this.nameText.text = "";
         this.dialogueText.text = "";
 
-        Object.values(this.slots).forEach(s => s.char?.setTalking(false));
+        for (const slotKey in this.slots) {
+            this.slots[slotKey as 'left' | 'center' | 'right'].instances.forEach(char => {
+                char.setTalking(false);
+            });
+        }
+
         const talkingChar = this.findCharInSlots(speakerId);
         if (talkingChar) talkingChar.setTalking(true);
     }
@@ -364,11 +364,20 @@ export class SceneRenderer {
         this.typingActive = false;
         this.skipRequested = true;
 
+        if (this.typeTimeout) {
+            window.clearTimeout(this.typeTimeout);
+            this.typeTimeout = null;
+        }
+
         this.nameText.text = this.currentPrefix;
         this.nameText.tint = this.currentNameColor;
         this.dialogueText.text = this.currentFullText;
 
-        Object.values(this.slots).forEach(s => s.char?.setTalking(false));
+        for (const slotKey in this.slots) {
+            this.slots[slotKey as 'left' | 'center' | 'right'].instances.forEach(char => {
+                char.setTalking(false);
+            });
+        }
 
         gsap.killTweensOf(this.nextArrow);
         this.nextArrow.visible = true;
@@ -378,10 +387,15 @@ export class SceneRenderer {
 
     private findCharInSlots(id: string | null) {
         if (!id) return null;
+        
         for (const slotKey in this.slots) {
             const slot = this.slots[slotKey as 'left' | 'center' | 'right'];
-            if (slot.char && slot.char.characterKey === id) return slot.char;
+            
+            const found = slot.instances.find(char => char.characterKey === id);
+            
+            if (found) return found;
         }
+        
         return null;
     }
 
@@ -451,57 +465,65 @@ export class SceneRenderer {
         this.uiLayer.addChild(border);
     }
 
-    public async updateCharacters(newCharacters: { left?: any, center?: any, right?: any }) {
+    public async updateCharacters(newCharacters: { left: any[], center: any[], right: any[] }) {
         if (!this.isReady) return;
 
         const { customCharacters } = useScriptStore.getState();
         const allCharacters = { ...characterData, ...customCharacters };
 
-        const loadPromises: Promise<any>[] = [];
-        const characterConfigs: any = {};
+        const loadPromises: Promise<any>[] =[];
+        const characterConfigs: Record<string, any> = {};
 
-        for (const [_slot, data] of Object.entries(newCharacters)) {
-            if (data) {
-                const charEntry = (allCharacters as any)[data.id]; 
+        const incomingCharsList =[
+            ...newCharacters.left,
+            ...newCharacters.center,
+            ...newCharacters.right
+        ];
 
-                if (!charEntry) {
-                    console.error(`Character ID ${data.id} not found.`);
-                    continue; 
-                }
+        for (const data of incomingCharsList) {
+            if (!data) continue;
 
-                const pose = (charEntry as any).poses[data.pose];
-                if (!pose) continue;
-                
-                loadPromises.push(loadPoseTextures(pose).then(tex => {
-                    characterConfigs[data.id] = { 
-                        textures: tex, 
-                        offsets: pose.offsets, 
-                        scale: charEntry.baseScale,
-                        options: {
-                            animSpeed: pose.sprites.animSpeed || 0.05,
-                            animInterval: pose.sprites.animInterval || null
-                        } 
-                    };
-                }));
+            const charEntry = (allCharacters as any)[data.id];
+            if (!charEntry) {
+                console.error(`Neural Link Error: Character ID ${data.id} not found.`);
+                continue;
             }
+
+            const pose = charEntry.poses[data.pose];
+            if (!pose) {
+                console.error(`Neural Link Error: Pose ${data.pose} for ${data.id} missing.`);
+                continue;
+            }
+
+            loadPromises.push(loadPoseTextures(pose).then(tex => {
+                characterConfigs[data.id] = {
+                    textures: tex,
+                    offsets: pose.offsets,
+                    scale: charEntry.baseScale || 2.15,
+                    options: {
+                        animSpeed: pose.animSpeed ?? pose.sprites?.animSpeed ?? 0.12,
+                        animInterval: pose.animInterval ?? pose.sprites?.animInterval ?? null
+                    }
+                };
+            }));
         }
+
         await Promise.all(loadPromises);
-        
-        const stageInstances: Record<string, Character> = {};
+
+        const stageInstances = new Map<string, Character>();
         for (const slotKey in this.slots) {
-            const char = this.slots[slotKey as 'left' | 'center' | 'right'].char;
-            if (char) {
-                stageInstances[char.characterKey] = char;
-                this.slots[slotKey as 'left' | 'center' | 'right'].char = null;
-            }
+            const slot = this.slots[slotKey as 'left' | 'center' | 'right'];
+            slot.instances.forEach(char => {
+                stageInstances.set(char.characterKey, char);
+            });
+            slot.instances =[];
         }
 
-        const activeKeysInNewFrame = new Set(Object.values(newCharacters).filter(d => d).map(d => d.id));
+        const newCharIds = new Set(incomingCharsList.map(c => c?.id).filter(Boolean));
 
-        // Handle Exits (Fade out characters no longer needed)
-        for (const charKey in stageInstances) {
-            if (!activeKeysInNewFrame.has(charKey)) {
-                const vanishingChar = stageInstances[charKey];
+        for (const [id, char] of stageInstances) {
+            if (!newCharIds.has(id)) {
+                const vanishingChar = char;
                 gsap.killTweensOf(vanishingChar.view);
                 gsap.to(vanishingChar.view, {
                     alpha: 0,
@@ -509,76 +531,59 @@ export class SceneRenderer {
                     ease: "steps(4)",
                     onComplete: () => vanishingChar.destroy()
                 });
-                delete stageInstances[charKey];
+                stageInstances.delete(id);
             }
         }
 
-        // Handle Movements and Entries
-        for (const [slotName, data] of Object.entries(newCharacters)) {
-            const targetSlot = slotName as 'left' | 'center' | 'right';
-            if (!data) continue;
+        for (const slotKey of['left', 'center', 'right'] as const) {
+            const slotData = newCharacters[slotKey];
+            const baseSlotX = this.slots[slotKey].x;
 
-            const config = characterConfigs[data.id];
+            for (const charData of slotData) {
+                if (!charData) continue;
 
-            if (!config) {
-                console.error(`Skipping ${data.id}: Configuration not found.`);
-                continue; 
-            }
+                const config = characterConfigs[charData.id];
+                if (!config) continue;
 
-            const targetX = this.slots[targetSlot].x;
-            const existingChar = stageInstances[data.id];
-
-            if (existingChar) {
-                this.slots[targetSlot].char = existingChar;
-                gsap.killTweensOf(existingChar.view);
+                const targetX = baseSlotX + (charData.xOffset || 0);
                 
-                existingChar.updatePose(config.textures, config.offsets, config.options);
+                let charInstance = stageInstances.get(charData.id);
 
-                if (existingChar.view.x !== targetX) {
-                    gsap.to(existingChar.view, { x: targetX, duration: 0.5, ease: "power2.out" });
-                }
-                gsap.to(existingChar.view, { alpha: 1, duration: 0.2 });
-                
-            } else {
-                const newChar = new Character(data.id, config.textures, config.offsets, {
-                    x: targetX,
-                    scale: config.scale,
-                    ...config.options
-                });
-                newChar.view.alpha = 0;
-                this.slots[targetSlot].char = newChar;
-                this.charLayer.addChild(newChar.view);
-                gsap.to(newChar.view, { alpha: 1, duration: 0.5, ease: "steps(4)" });
-            }
-        }
-    }
+                if (charInstance) {
+                    // already on screen
+                    this.slots[slotKey].instances.push(charInstance);
+                    
+                    gsap.killTweensOf(charInstance.view);
 
-    public async refreshCharacters() {
-        if (!this.isReady) return;
-        
-        const { customCharacters } = useScriptStore.getState();
-        const allCharacters = { ...characterData, ...customCharacters };
-        
-        for (const slotKey in this.slots) {
-            const slot = this.slots[slotKey as 'left' | 'center' | 'right'];
-            if (slot.char) {
-                const charId = slot.char.characterKey;
-                const stillExists = (allCharacters as any)[charId];
-                
-                if (!stillExists) {
-                    const charToRemove = slot.char;
-                    gsap.killTweensOf(charToRemove.view);
-                    gsap.to(charToRemove.view, {
-                        alpha: 0,
-                        duration: 0.3,
-                        onComplete: () => {
-                            charToRemove.destroy();
-                            if (this.charLayer.children.includes(charToRemove.view)) {
-                                this.charLayer.removeChild(charToRemove.view);
-                            }
-                        }
+                    charInstance.updatePose(config.textures, config.offsets, {
+                        x: targetX,
+                        scale: config.scale,
+                        ...config.options
                     });
-                    slot.char = null;
+
+                    gsap.to(charInstance.view, {
+                        x: targetX,
+                        alpha: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                } else {
+                    // new entry
+                    const newChar = new Character(charData.id, config.textures, config.offsets, {
+                        x: targetX,
+                        scale: config.scale,
+                        ...config.options
+                    });
+
+                    newChar.view.alpha = 0;
+                    this.slots[slotKey].instances.push(newChar);
+                    this.charLayer.addChild(newChar.view);
+
+                    gsap.to(newChar.view, {
+                        alpha: 1,
+                        duration: 0.5,
+                        ease: "steps(4)"
+                    });
                 }
             }
         }
@@ -838,7 +843,7 @@ export class SceneRenderer {
 
     public stopMusic() {
         this.currentTrackAlias = null;
-        this.activePlaylist = [];
+        this.activePlaylist =[];
         sound.stopAll();
     }
     

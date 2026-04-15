@@ -57,8 +57,7 @@ export const Preview = () => {
             containerRef.current.innerHTML = '';
         }
     };
-  }, []);
-
+  },[]);
 
   useEffect(() => {
     const renderer = rendererRef.current;
@@ -107,7 +106,7 @@ export const Preview = () => {
     else {
       renderer.stopMusic();
     }
-  }, [frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying, customCharacters]);
+  },[frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying, customCharacters]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -120,13 +119,6 @@ export const Preview = () => {
     
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isPlaying, setIsPlaying]);
-
-  useEffect(() => {
-    const renderer = rendererRef.current;
-    if (!renderer || !loaded) return;
-
-    renderer.refreshCharacters();
-  }, [customCharacters, loaded]);
 
   return (
     <div className={`relative bg-black flex items-center justify-center transition-all duration-500 ${

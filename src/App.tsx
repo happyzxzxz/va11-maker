@@ -1,5 +1,5 @@
 import { Preview } from './components/Preview';
-import { useScriptStore } from './store/useScriptStore';
+import { useScriptStore, type SlotCharacter } from './store/useScriptStore';
 import characterData from './engine/jsons/characters.json';
 import { ProjectSidebar } from './components/ProjectSidebar';
 import { Play, Copy, Plus, Trash2, Eraser, Music, Settings, Activity } from 'lucide-react'; 
@@ -12,19 +12,13 @@ export default function Maker() {
   const currentFrame = frames[currentIndex];
   const [isJukeboxOpen, setIsJukeboxOpen] = useState(false);
   const [isProjectOpen, setIsProjectOpen] = useState(false);
-  const [isCreatorOpen, setIsCreatorOpen] = useState(false);
+  const[isCreatorOpen, setIsCreatorOpen] = useState(false);
+  
   const allCharacters = { ...characterData, ...customCharacters };
-
-  const updateSlot = (slot: 'left' | 'center' | 'right', charId: string | null) => {
-    const newCharacters = { ...currentFrame.characters };
-    if (!charId || charId === 'none') {
-      newCharacters[slot] = null;
-    } else {
-      const firstPose = Object.keys((allCharacters as any)[charId].poses)[0];
-      newCharacters[slot] = { id: charId, pose: firstPose };
-    }
-    updateCurrentFrame({ characters: newCharacters });
-  };
+  
+  const validCharacterKeys = Object.keys(allCharacters).filter(
+    id => (allCharacters as any)[id]?.poses && Object.keys((allCharacters as any)[id].poses).length > 0
+  );
 
   const updatePose = (slot: 'left' | 'center' | 'right', pose: string) => {
     const newCharacters = { ...currentFrame.characters };
@@ -41,6 +35,34 @@ export default function Maker() {
         mouthTarget: isSpeaking ? slot : null
       }
     });
+  };
+
+  const addCharacterToSlot = (slot: 'left' | 'center' | 'right') => {
+    const newCharacters = { ...currentFrame.characters };
+    const firstId = validCharacterKeys[0];
+    if (!firstId) return;
+    
+    const firstPose = Object.keys((allCharacters as any)[firstId].poses)[0];
+    newCharacters[slot] = [...newCharacters[slot], { id: firstId, pose: firstPose, xOffset: 0 }];
+    updateCurrentFrame({ characters: newCharacters });
+  };
+
+  const removeCharacterFromSlot = (slot: 'left' | 'center' | 'right', index: number) => {
+    const newCharacters = { ...currentFrame.characters };
+    newCharacters[slot] = newCharacters[slot].filter((_, i) => i !== index);
+    updateCurrentFrame({ characters: newCharacters });
+  };
+
+  const updateCharacterInSlot = (slot: 'left' | 'center' | 'right', index: number, data: Partial<SlotCharacter>) => {
+    const newCharacters = { ...currentFrame.characters };
+    newCharacters[slot][index] = { ...newCharacters[slot][index], ...data };
+    
+    if (data.id) {
+      const newId = data.id;
+      newCharacters[slot][index].pose = Object.keys((allCharacters as any)[newId].poses)[0];
+    }
+    
+    updateCurrentFrame({ characters: newCharacters });
   };
 
   return (
@@ -93,7 +115,7 @@ export default function Maker() {
         {!isPlaying && (
           <div className="absolute top-6 left-6 z-20 flex flex-col items-start gap-2">
             <button 
-              onClick={() => setIsCreatorOpen(true)} // Or setIsCreatorOpen(true) depending on your state name
+              onClick={() => setIsCreatorOpen(true)}
               className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95"
             >
               <Activity size={14} /> CHARACTER LAB
@@ -156,55 +178,77 @@ export default function Maker() {
             <section className="space-y-3">
               <label className="text-[10px] text-zinc-500 uppercase font-bold tracking-tighter">Dialogue Script</label>
               <div className="space-y-2">
-                <select value={currentFrame.speaker.id} onChange={(e) => updateCurrentFrame({ speaker: { ...currentFrame.speaker, id: e.target.value }})} className="w-full bg-zinc-900 border border-zinc-800 p-2 text-xs outline-none focus:border-pink-500">
-                  {Object.keys(allCharacters).map(id => (<option key={id} value={id}>{(allCharacters as any)[id].displayName || id}</option>))}
+                <select 
+                  value={currentFrame.speaker.id} 
+                  onChange={(e) => updateCurrentFrame({ speaker: { ...currentFrame.speaker, id: e.target.value }})} 
+                  className="w-full bg-zinc-900 border border-zinc-800 p-2 text-xs outline-none focus:border-pink-500"
+                >
+                  <option value="">--- NO SPEAKER ---</option>
+                  {validCharacterKeys.map(id => (<option key={id} value={id}>{(allCharacters as any)[id].displayName || id}</option>))}
                 </select>
                 <textarea value={currentFrame.speaker.text} onChange={(e) => updateCurrentFrame({ speaker: { ...currentFrame.speaker, text: e.target.value }})} className="w-full bg-zinc-900 border border-zinc-800 p-3 text-xs h-32 outline-none focus:border-pink-500 leading-relaxed resize-none" placeholder="Type dialogue..."/>
               </div>
             </section>
 
             <section className="space-y-4 pt-4 border-t border-zinc-900">
-               <label className="text-[10px] text-zinc-500 uppercase font-bold tracking-tighter">Stage Presence</label>
-               {(['left', 'center', 'right'] as const).map((slot) => {
-                 const charInSlot = currentFrame.characters[slot];
-                 const isSpeaker = charInSlot?.id === currentFrame.speaker.id;
-                 return (
-                   <div key={slot} className={`space-y-2 p-3 rounded border transition-colors ${isSpeaker ? 'bg-purple-900/5 border-purple-900/50' : 'bg-zinc-900/30 border-zinc-800'}`}>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-[10px] text-zinc-500 uppercase font-bold">{slot} Slot</span>
-                        {isSpeaker && (
-                          <label className="flex items-center gap-2 cursor-pointer group">
-                            <span className="text-[9px] text-purple-400 uppercase font-bold opacity-0 group-hover:opacity-100 transition-opacity">Speaking</span>
-                            <input type="checkbox" checked={currentFrame.speaker.mouthTarget === slot} onChange={(e) => toggleSpeaking(slot, e.target.checked)} className="accent-purple-500 w-3 h-3"/>
-                          </label>
-                        )}
-                      </div>
-                      <select value={charInSlot?.id || 'none'} onChange={(e) => updateSlot(slot, e.target.value)} className="w-full bg-zinc-900 border border-zinc-800 p-2 text-xs outline-none focus:border-cyan-500">
-                        <option value="none">--- EMPTY ---</option>
-                        {Object.keys(allCharacters).map(id => ((allCharacters as any)[id].poses && <option key={id} value={id}>{id}</option>))}
-                      </select>
-                      {charInSlot && (
+              <label className="text-[10px] text-zinc-500 uppercase font-bold tracking-tighter">Stage Presence</label>
+              
+              {(['left', 'center', 'right'] as const).map((slot) => (
+                <div key={slot} className="space-y-2 p-2 border border-zinc-800 rounded bg-zinc-900/10">
+                  <div className="flex justify-between items-center px-1">
+                    <span className="text-[9px] text-zinc-500 uppercase font-bold">{slot} Slot</span>
+                    <button onClick={() => addCharacterToSlot(slot)} className="text-[8px] text-cyan-500 hover:text-white uppercase font-bold">+ Add</button>
+                  </div>
+
+                  <div className="space-y-3">
+                   {Array.isArray(currentFrame.characters[slot]) && 
+                    currentFrame.characters[slot].map((char, index) => (
+                      <div key={index} className="p-3 bg-zinc-900 border border-zinc-800 rounded-sm relative group/char">
+                        {/* Character Selector */}
                         <select 
-                          value={charInSlot.pose}
-                          onChange={(e) => updatePose(slot, e.target.value)}
-                          className="w-full bg-zinc-950 border border-zinc-800 p-2 text-[10px] text-cyan-500 outline-none"
-                        >
-                          {(() => {
-                            const charEntry = (allCharacters as any)[charInSlot.id];
-                            
-                            if (charEntry && charEntry.poses) {
-                              return Object.keys(charEntry.poses).map(pose => (
-                                <option key={pose} value={pose}>{pose.toUpperCase()}</option>
-                              ));
+                          value={char.id} 
+                          onChange={(e) => {
+                            if (e.target.value === 'none') {
+                              removeCharacterFromSlot(slot, index);
+                            } else {
+                              updateCharacterInSlot(slot, index, { id: e.target.value });
                             }
-                            
-                            return <option value="">INVALID CHARACTER ID</option>;
-                          })()}
+                          }}
+                          className="w-full bg-black border border-zinc-800 p-1.5 text-xs text-zinc-300 mb-2"
+                        >
+                          {validCharacterKeys.map(id => <option key={id} value={id}>{(allCharacters as any)[id].displayName || id}</option>)}
                         </select>
-                      )}
-                   </div>
-                 );
-               })}
+
+                        {/* Pose and X-Offset */}
+                        <div className="grid grid-cols-2 gap-2">
+                          <select 
+                            value={char.pose} 
+                            onChange={(e) => updateCharacterInSlot(slot, index, { pose: e.target.value })}
+                            className="bg-black border border-zinc-800 p-1 text-[10px] text-cyan-500"
+                          >
+                            {Object.keys((allCharacters as any)[char.id]?.poses || {}).map(p => <option key={p} value={p}>{p}</option>)}
+                          </select>
+                          
+                          <input 
+                            type="number" 
+                            value={char.xOffset || 0} 
+                            onChange={(e) => updateCharacterInSlot(slot, index, { xOffset: parseInt(e.target.value) || 0 })}
+                            className="bg-black border border-zinc-800 p-1 text-[10px] text-zinc-400 font-mono"
+                            placeholder="X Offset"
+                          />
+                        </div>
+
+                        <button 
+                          onClick={() => removeCharacterFromSlot(slot, index)}
+                          className="absolute -top-2 -right-2 bg-red-900 text-white p-1 rounded-full opacity-0 group-hover/char:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={10} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </section>
 
             <section className="space-y-3 pt-4 border-t border-zinc-900">

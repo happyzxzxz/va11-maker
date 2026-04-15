@@ -3,24 +3,77 @@ import { useScriptStore } from '../store/useScriptStore';
 import { useRef, useState } from 'react';
 import { ScriptPlayer } from '../engine/ScriptPlayer';
 import { VideoRecorder } from '../engine/utils/VideoRecorder';
+import { db } from '../engine/utils/db';
 
 export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  const { frames, playlist, loadExternalScript, renderer, setIsPlaying } = useScriptStore();
+  const { frames, playlist, renderer, setIsPlaying, customCharacters, loadExternalScript } = useScriptStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isRecording, setIsRecording] = useState(false);
+  const[isRecording, setIsRecording] = useState(false);
 
-  const handleExport = () => {
+  const handleExport = async () => {
+
+    const usedIds = new Set<string>();
+    
+    frames.forEach(frame => {
+        ['left', 'center', 'right'].forEach(slot => {
+            const slotChars = frame.characters[slot as 'left' | 'center' | 'right'];
+            if (Array.isArray(slotChars)) {
+                slotChars.forEach(c => {
+                    if (c && c.id) usedIds.add(c.id);
+                });
+            }
+        });
+        if (frame.speaker.id) usedIds.add(frame.speaker.id);
+    });
+
+    const filteredCustomChars: Record<string, any> = {};
+    usedIds.forEach(id => {
+        if (customCharacters[id]) {
+            filteredCustomChars[id] = customCharacters[id];
+        }
+    });
+
+    const bundledImages: Record<string, string> = {};
+
+    for (const charId in filteredCustomChars) {
+        const char = filteredCustomChars[charId];
+        for (const pose of Object.values(char.poses) as any) {
+            const processSprite = async (id: string | null) => {
+                if (!id || id.startsWith('http') || id.startsWith('assets/')) return;
+                
+                const entry = await db.images.get(id);
+                if (entry && entry.data) {
+                    const base64 = await new Promise<string>((res) => {
+                        const reader = new FileReader();
+                        reader.onload = () => res(reader.result as string);
+                        reader.readAsDataURL(entry.data as Blob);
+                    });
+                    bundledImages[id] = base64;
+                }
+            };
+
+            await processSprite(pose.sprites.body);
+            await processSprite(pose.sprites.staticCharAnim);
+            await Promise.all((pose.sprites.eyes ||[]).map(processSprite));
+            await Promise.all((pose.sprites.mouth ||[]).map(processSprite));
+            await Promise.all((pose.sprites.characterAnim ||[]).map(processSprite));
+        }
+    }
+
     const projectData = {
-      version: "1.0",
+      version: "2.0",
       timestamp: new Date().toISOString(),
       frames: frames,
-      playlist: playlist
+      playlist: playlist,
+      customCharacters: filteredCustomChars,
+      assets: bundledImages
     };
+
     const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `valhalla_project.json`;
+    link.download = `valhalla_bundle.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -73,20 +126,42 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const json = JSON.parse(e.target?.result as string);
         
-        if (window.confirm("Importing will overwrite your current progress. Continue?")) {
+        if (window.confirm("Importing will overwrite current data. Continue?")) {
+          
+          // A. UNPACK ASSETS (Base64 -> IndexedDB)
+          if (json.assets) {
+            const unpackPromises = Object.entries(json.assets).map(async ([id, base64]) => {
+              const res = await fetch(base64 as string);
+              const blob = await res.blob();
+              return db.images.put({ id, data: blob });
+            });
+            await Promise.all(unpackPromises);
+            console.log("Assets unpacked.");
+          }
+
+          // B. REGISTER CUSTOM CHARACTERS
+          if (json.customCharacters) {
+            const currentCustom = useScriptStore.getState().customCharacters;
+            useScriptStore.setState({ 
+              customCharacters: { ...currentCustom, ...json.customCharacters } 
+            });
+          }
+
+          // C. LOAD SCRIPT
           loadExternalScript(json);
           onClose();
         }
       } catch (err) {
-        alert("Error parsing JSON: The file appears to be corrupted or invalid.");
+        console.error(err);
+        alert("Import failed: Invalid file format.");
       }
     };
     reader.readAsText(file);
-    
+
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 

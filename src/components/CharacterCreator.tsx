@@ -11,11 +11,11 @@ interface PoseData {
   name: string;
   offsets: { body: Offset; eyes: Offset; mouth: Offset; characterAnim: Offset };
   sprites: {
-    body: File | null;
-    eyes: (File | null)[];
-    mouth: (File | null)[];
-    characterAnim: (File | null)[];
-    staticCharAnim: File | null;
+    body: File | string | null;
+    eyes: (File | string | null)[];
+    mouth: (File | string | null)[];
+    characterAnim: (File | string | null)[];
+    staticCharAnim: File | string | null;
   };
   animSpeed: number;
   animInterval: { min: number; max: number };
@@ -26,8 +26,15 @@ function usePreviewUrl(file: File | null) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
     if (!file) { setUrl(null); return; }
+
+    if (typeof file === 'string') {
+      setUrl(file);
+      return;
+    }
+
     const newUrl = URL.createObjectURL(file);
     setUrl(newUrl);
+
     return () => URL.revokeObjectURL(newUrl);
   }, [file]);
   return url;
@@ -41,14 +48,14 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
   const [activeDrag, setActiveDrag] = useState<'body' | 'eyes' | 'mouth' | 'characterAnim' | null>(null);
   const [isPanning, setIsPanning] = useState(false);
   const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const[zoom, setZoom] = useState(1);
   const [isLive, setIsLive] = useState(true);
-  const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const[isGuideOpen, setIsGuideOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'library' | 'editor'>('library');
   const customCharacters = useScriptStore(state => state.customCharacters);
   const workspaceRef = useRef<HTMLDivElement>(null);
 
-  const [charId, setCharId] = useState('');
+  const[charId, setCharId] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [nameColor, setNameColor] = useState('#FFFFFF');
   const [speechFile, setSpeechFile] = useState('speechHigh');
@@ -57,20 +64,33 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
   const [poses, setPoses] = useState<PoseData[]>([{
     name: 'normal',
     offsets: { body: {x: 0, y: 0}, eyes: { x: 0, y: 0 }, mouth: { x: 0, y: 0 }, characterAnim: { x: 0, y: 0 } },
-    sprites: { body: null, eyes: [null], mouth: [null], characterAnim: [], staticCharAnim: null },
+    sprites: { body: null, eyes: [null], mouth: [null], characterAnim:[], staticCharAnim: null },
     animSpeed: 0.12,
     animInterval: { min: 5000, max: 7000 }
   }]);
 
-  const [expandedPose, setExpandedPose] = useState<number>(0);
+  const[expandedPose, setExpandedPose] = useState<number>(0);
   const currentPose = poses[expandedPose];
 
-  // Animation Ticker
-  const [tick, setTick] = useState(0);
+  // Animation Tickers - Separated out so custom anims don't slow down eyes/mouth
+  const[eyeTick, setEyeTick] = useState(0);
+  const [mouthTick, setMouthTick] = useState(0);
+  const [animTick, setAnimTick] = useState(0);
+
   useEffect(() => {
     if (!isLive) return;
-    const interval = setInterval(() => setTick(t => t + 1), (currentPose?.animSpeed || 0.12) * 1000);
-    return () => clearInterval(interval);
+
+    const getInterval = (pixiSpeed: number) => 1000 / (pixiSpeed * 60);
+
+    const eyeInterval = setInterval(() => setEyeTick(t => t + 1), getInterval(0.15));
+    const mouthInterval = setInterval(() => setMouthTick(t => t + 1), getInterval(0.1));
+    const customAnimInterval = setInterval(() => setAnimTick(t => t + 1), getInterval(currentPose?.animSpeed || 0.12));
+
+    return () => {
+        clearInterval(eyeInterval);
+        clearInterval(mouthInterval);
+        clearInterval(customAnimInterval);
+    };
   }, [isLive, currentPose?.animSpeed]);
 
   const bodyUrl = usePreviewUrl(currentPose?.sprites.body);
@@ -119,7 +139,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
     setIsPanning(false);
   };
 
-  const handleFileUpload = (pIdx: number, category: keyof PoseData['sprites'], file: File, fIdx?: number) => {
+  const handleFileUpload = (pIdx: number, category: keyof PoseData['sprites'], data: File | string, fIdx?: number) => {
     setPoses(prev => {
       const next = [...prev];
       const targetPose = { ...next[pIdx] };
@@ -127,10 +147,10 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
 
       if (Array.isArray(nextSprites[category])) {
         const nextArray = [...(nextSprites[category] as any[])];
-        nextArray[fIdx!] = file;
+        nextArray[fIdx!] = data;
         (nextSprites[category] as any) = nextArray;
       } else {
-        (nextSprites[category] as any) = file;
+        (nextSprites[category] as any) = data;
       }
 
       targetPose.sprites = nextSprites;
@@ -172,10 +192,11 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
     const finalPoses: Record<string, any> = {};
 
     for (const pose of poses) {
-      const prefix = `custom_${charId}_${pose.name}`;
-      const storeImg = async (f: File | null, suffix: string) => {
+      const storeImg = async (f: File | string | null, suffix: string) => {
         if (!f) return null;
-        const id = `${prefix}_${suffix}`;
+        if (typeof f === 'string') return f; 
+        
+        const id = `custom_${charId}_${pose.name}_${suffix}`;
         await db.images.put({ id, data: f });
         return id;
       };
@@ -232,7 +253,9 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
       const getFile = async (id: string | null) => {
         if (!id) return null;
         const entry = await db.images.get(id);
-        return entry ? blobToFile(entry.data as Blob, `${id}.png`) : null;
+        if (!entry || !entry.data) return null;
+        const ext = entry.data.type === 'image/gif' ? 'gif' : 'png';
+        return blobToFile(entry.data as Blob, `${id}.${ext}`);
       };
 
       const pose: PoseData = {
@@ -271,7 +294,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
     setPoses([{
         name: 'normal',
         offsets: { body: {x:0, y:0}, eyes: {x:0, y:0}, mouth: {x:0, y:0}, characterAnim: {x:0, y:0} },
-        sprites: { body: null, eyes: [null], mouth: [null], characterAnim: [], staticCharAnim: null },
+        sprites: { body: null, eyes: [null], mouth: [null], characterAnim:[], staticCharAnim: null },
         animSpeed: 0.12,
         animInterval: { min: 5000, max: 7000 }
     }]);
@@ -279,7 +302,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
   };
 
   const CharacterThumbnail = ({ char }: { char: any }) => {
-    const [imgUrl, setImgUrl] = useState<string | null>(() => {
+    const[imgUrl, setImgUrl] = useState<string | null>(() => {
       return thumbnailCache.get(char.id) || null;
     });
 
@@ -311,6 +334,13 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
         const bodyId = firstPose.sprites.body;
 
         if (bodyId) {
+
+          if (bodyId.startsWith('http') || bodyId.startsWith('assets/')) {
+            thumbnailCache.set(charId, bodyId);
+            setImgUrl(bodyId);
+            return;
+          }
+
           const entry = await db.images.get(bodyId);
           if (entry && entry.data && isMounted) {
             const url = URL.createObjectURL(entry.data as Blob);
@@ -354,8 +384,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
           <div className="flex items-center gap-3">
             <Activity size={16} />
             <h2 className="text-[10px] font-bold tracking-[0.4em] uppercase">Character Laboratory // BTC-7 Protocol</h2>
-            <button onClick={() => setViewMode('library')} className="text-[10px] uppercase mr-4 tracking-tighter px-3 py-1.5 rounded-md bg-zinc-700 text-zinc-100 hover:bg-zinc-500 hover:text-white transition-all duration-200">
-              [ Back to Database ]
+            <button onClick={() => setViewMode('library')} className="text-[10px] uppercase mr-4 tracking-tighter px-3 py-1.5 rounded-md bg-zinc-700 text-zinc-100 hover:bg-zinc-500 hover:text-white transition-all duration-200">[ Back to Database ]
             </button>
                     <button 
                 onClick={() => setIsGuideOpen(true)} 
@@ -440,7 +469,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
             </section>
 
             <section className="space-y-3 pb-20">
-              <button onClick={() => setPoses([...poses, { name: `pose_${poses.length}`, offsets: { body: {x:0,y:0}, eyes: {x:-43,y:0}, mouth: {x:0,y:0}, characterAnim: {x:0,y:0} }, sprites: { body: null, eyes: [null], mouth: [null], characterAnim: [], staticCharAnim: null }, animSpeed: 0.12, animInterval: { min: 5000, max: 7000 } }])} className="w-full text-[8px] text-cyan-500 font-bold border border-cyan-900/30 p-2 hover:bg-cyan-950 transition-colors uppercase">+ New Pose</button>
+              <button onClick={() => setPoses([...poses, { name: `pose_${poses.length}`, offsets: { body: {x:0,y:0}, eyes: {x:-43,y:0}, mouth: {x:0,y:0}, characterAnim: {x:0,y:0} }, sprites: { body: null, eyes: [null], mouth:[null], characterAnim:[], staticCharAnim: null }, animSpeed: 0.12, animInterval: { min: 5000, max: 7000 } }])} className="w-full text-[8px] text-cyan-500 font-bold border border-cyan-900/30 p-2 hover:bg-cyan-950 transition-colors uppercase">+ New Pose</button>
               {poses.map((pose, pIdx) => (
                 <div key={pIdx} className={`border rounded overflow-hidden ${expandedPose === pIdx ? 'border-pink-500/40 bg-pink-500/5' : 'border-zinc-800 bg-zinc-900/10'}`}>
                   <button className="w-full p-3 flex justify-between items-center text-left uppercase" onClick={() => setExpandedPose(pIdx)}>
@@ -451,8 +480,16 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
                     <div className="p-4 pt-0 space-y-4 border-t border-zinc-800/50">
                       <Input label="Pose Key" value={pose.name} onChange={(v:any) => {const n=[...poses]; n[pIdx].name=v; setPoses(n)}} />
                       <div className="pt-2 space-y-2 border-t border-zinc-900 mt-2">
-                        <AssetInput label="BASE BODY" onChange={(f:any) => handleFileUpload(pIdx, 'body', f)} />
-                        <AssetInput label="STATIC PROP" onChange={(f:any) => handleFileUpload(pIdx, 'staticCharAnim', f)} />
+                        <AssetInput 
+                          label="BASE BODY" 
+                          value={currentPose?.sprites.body}
+                          onChange={(f: any) => handleFileUpload(expandedPose, 'body', f)} 
+                        />
+                        <AssetInput 
+                          label="STATIC PROP" 
+                          value={currentPose?.sprites.staticCharAnim}
+                          onChange={(f: any) => handleFileUpload(expandedPose, 'staticCharAnim', f)} 
+                        />
                       </div>
                       <div className="space-y-6">
                         <DynamicList title="EYE FRAMES" list={pose.sprites.eyes} onAdd={() => addFrameRow(pIdx, 'eyes')} onUpload={(file: File, index: number) => handleFileUpload(pIdx, 'eyes', file, index)} onRemove={(i: number) => removeFrameRow(pIdx, 'eyes', i)} />
@@ -493,9 +530,9 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
                 <div ref={workspaceRef} className="absolute" style={{ left: '50%', bottom: '0', transform: `translate(-50%, 0) translate(${currentPose.offsets.body.x}px, ${currentPose.offsets.body.y}px)`, width: 'fit-content', height: 'fit-content' }}>
                     <div onPointerDown={(e) => { e.stopPropagation(); setActiveDrag('body'); }} style={{ transform: `scale(${baseScale})`, transformOrigin: 'bottom center', width: 'fit-content', height: 'fit-content', position: 'relative' }} className="cursor-move">
                         {bodyUrl ? <img src={bodyUrl} className="block pointer-events-none" style={{ width: 'auto', height: 'auto', maxWidth: 'none' }} alt="body" /> : <div className="w-[100px] h-[200px] border border-dashed border-zinc-800 flex items-center justify-center text-[8px]">Empty Body</div>}
-                        <AnimatedDraggableOverlay label="ANIM" files={currentPose?.sprites.characterAnim} staticFile={currentPose?.sprites.staticCharAnim} tick={tick} offset={currentPose?.offsets.characterAnim} isActive={activeDrag === 'characterAnim'} onSelect={() => setActiveDrag('characterAnim')} color="border-cyan-500" isLive={isLive} />
-                        <AnimatedDraggableOverlay label="EYES" files={currentPose?.sprites.eyes} tick={tick} offset={currentPose?.offsets.eyes} isActive={activeDrag === 'eyes'} onSelect={() => setActiveDrag('eyes')} color="border-pink-500" isLive={isLive} />
-                        <AnimatedDraggableOverlay label="MOUTH" files={currentPose?.sprites.mouth} tick={tick} offset={currentPose?.offsets.mouth} isActive={activeDrag === 'mouth'} onSelect={() => setActiveDrag('mouth')} color="border-yellow-500" isLive={isLive} />
+                        <AnimatedDraggableOverlay label="ANIM" files={currentPose?.sprites.characterAnim} staticFile={currentPose?.sprites.staticCharAnim} tick={animTick} offset={currentPose?.offsets.characterAnim} isActive={activeDrag === 'characterAnim'} onSelect={() => setActiveDrag('characterAnim')} color="border-cyan-500" isLive={isLive} />
+                        <AnimatedDraggableOverlay label="EYES" files={currentPose?.sprites.eyes} tick={eyeTick} offset={currentPose?.offsets.eyes} isActive={activeDrag === 'eyes'} onSelect={() => setActiveDrag('eyes')} color="border-pink-500" isLive={isLive} />
+                        <AnimatedDraggableOverlay label="MOUTH" files={currentPose?.sprites.mouth} tick={mouthTick} offset={currentPose?.offsets.mouth} isActive={activeDrag === 'mouth'} onSelect={() => setActiveDrag('mouth')} color="border-yellow-500" isLive={isLive} />
                     </div>
                 </div>
               </div>
@@ -528,12 +565,14 @@ const AnimatedDraggableOverlay = ({ files, staticFile, tick, offset, label, isAc
     return filteredFiles[tick % filteredFiles.length];
   }, [isLive, tick, filteredFiles, staticFile]);
 
-  const url = usePreviewUrl(currentFile);
-  if (!url || !offset) return null;
+  const blobUrl = usePreviewUrl(currentFile instanceof File ? currentFile : null);
+  const finalUrl = typeof currentFile === 'string' ? currentFile : blobUrl;
+
+  if (!finalUrl || !offset) return null;
 
   return (
     <div onPointerDown={(e) => { e.stopPropagation(); onSelect(); }} className={`absolute cursor-move border z-20 ${isActive ? color + ' bg-white/10 z-50 shadow-none' : 'border-transparent opacity-90'}`} style={{ left: `${offset.x}px`, top: `${offset.y}px` }}>
-      <img src={url} className="pointer-events-none block max-w-none" style={{ width: 'auto', height: 'auto' }} alt={label} />
+      <img src={finalUrl} className="pointer-events-none block max-w-none" style={{ width: 'auto', height: 'auto' }} alt={label} />
       <div className={`absolute -top-4 left-0 text-[5px] font-bold px-1 whitespace-nowrap tracking-widest ${isActive ? 'bg-white text-black' : 'bg-black/80 text-zinc-500'}`}>{label}</div>
     </div>
   );
@@ -546,38 +585,109 @@ const Input = ({ label, value, onChange, placeholder, type = "text", step }: any
   </div>
 );
 
-const AssetInput = ({ label, onChange }: any) => (
-  <div className="flex items-center justify-between bg-zinc-900/50 border border-zinc-800 p-2 rounded-sm hover:border-zinc-700 transition-colors mt-1">
-    <span className="text-[8px] text-zinc-500 uppercase font-bold">{label}</span>
-    <input type="file" id={label} className="hidden" onChange={e => e.target.files?.[0] && onChange(e.target.files[0])} />
-    <label htmlFor={label} className="cursor-pointer text-cyan-600 hover:text-cyan-400"><Upload size={14}/></label>
-  </div>
-);
+const AssetInput = ({ label, onChange, value }: any) => {
+  const [isLinkMode, setIsLinkMode] = useState(typeof value === 'string');
+  const [tempLink, setTempLink] = useState(typeof value === 'string' ? value : '');
+
+  useEffect(() => {
+    if (typeof value === 'string') {
+      setIsLinkMode(true);
+      setTempLink(value);
+    } else if (value) {
+      setIsLinkMode(false);
+    }
+  }, [value]);
+
+  const fileName = useMemo(() => {
+    if (value && typeof value === 'object' && 'name' in value) {
+      return value.name;
+    }
+    // If it's a string, it's either a URL or a Database ID
+    if (typeof value === 'string') return "Linked Asset";
+    return null;
+  }, [value]);
+
+  return (
+    <div className="space-y-1 mt-1 border-b border-zinc-800 pb-2">
+      <div className="flex justify-between items-center">
+        <span className="text-[8px] text-zinc-500 uppercase font-bold">{label}</span>
+        <button 
+          type="button"
+          onClick={() => setIsLinkMode(!isLinkMode)}
+          className="text-[7px] text-cyan-600 hover:text-cyan-400 uppercase font-bold"
+        >
+          {isLinkMode ? "[ Switch to File ]" : "[ Switch to Link ]"}
+        </button>
+      </div>
+
+      {isLinkMode ? (
+        <div className="flex gap-1">
+          <input 
+            type="text"
+            placeholder="Paste direct image link..."
+            className="flex-1 bg-black border border-zinc-800 p-1.5 text-[9px] text-cyan-500 outline-none focus:border-cyan-700 font-mono"
+            value={tempLink}
+            onChange={(e) => setTempLink(e.target.value)}
+          />
+          <button 
+            onClick={() => onChange(tempLink)}
+            className="bg-cyan-900/30 text-cyan-500 px-2 text-[8px] font-bold uppercase hover:bg-cyan-800/50 border border-cyan-800/50"
+          >
+            Apply
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between bg-zinc-900/50 border border-zinc-800 p-2 rounded-sm">
+          <span className="text-[9px] text-zinc-600 truncate mr-2 italic">
+            {fileName || "No binary file"}
+          </span>
+
+          <input 
+            type="file" 
+            id={`file-input-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            className="hidden" 
+            onChange={e => {
+              const file = e.target.files?.[0];
+              if (file) onChange(file);
+            }} 
+          />
+          <label 
+            htmlFor={`file-input-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            className="cursor-pointer text-cyan-600 hover:text-cyan-400 p-1"
+          >
+            <Upload size={14}/>
+          </label>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const DynamicList = ({ title, list, onAdd, onUpload, onRemove }: any) => (
-  <div className="space-y-1.5">
+  <div className="space-y-2">
     <div className="flex justify-between items-center border-b border-zinc-800 pb-0.5">
       <span className="text-[8px] text-zinc-600 uppercase font-bold tracking-widest">{title}</span> 
-      <button onClick={onAdd} className="text-cyan-700 hover:text-cyan-400 transition-colors"><Plus size={12}/></button>
+      <button onClick={onAdd} className="text-cyan-700 hover:text-cyan-400 transition-colors">
+        <Plus size={12}/>
+      </button>
     </div>
-    <div className="grid grid-cols-1 gap-1 max-h-32 overflow-y-auto pr-1 custom-scrollbar">
+    <div className="space-y-1 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
       {list.map((file: any, i: number) => (
-        <div key={i} className="flex items-center gap-2 bg-black border border-zinc-800 p-1 rounded-sm group/row hover:border-zinc-700">
-          <span className="text-[7px] text-zinc-800 w-3 font-bold">#{i+1}</span>
-          <div className="w-4 h-4 bg-zinc-900 rounded-sm flex items-center justify-center border border-zinc-800 overflow-hidden">
-             <ThumbnailPreview file={file} />
-          </div>
-          <input type="file" id={`${title}-${i}`} className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0], i)} />
-          <label htmlFor={`${title}-${i}`} className="flex-1 text-[9px] text-zinc-600 truncate cursor-pointer hover:text-zinc-300 font-bold uppercase tracking-tighter">{file ? file.name : 'empty'}</label>
-          <button onClick={() => onRemove(i)} className="opacity-0 group-hover/row:opacity-100 text-zinc-700 hover:text-red-500 transition-opacity"><Trash2 size={10} /></button>
-        </div>
+        <FrameInput 
+          key={`${title}-${i}`}
+          index={i}
+          category={title}
+          file={file} 
+          onUpload={(data: any) => onUpload(data, i)} 
+          onRemove={() => onRemove(i)} 
+        />
       ))}
     </div>
   </div>
 );
 
-const ThumbnailPreview = ({ file }: { file: File | null }) => {
-    const url = usePreviewUrl(file);
+const ThumbnailPreview = ({ file }: { file: File | string | null }) => {
+    const url = typeof file === 'string' ? file : usePreviewUrl(file);
     if (!url) return <div className="text-[6px] text-zinc-800">?</div>;
     return <img src={url} className="w-full h-full object-contain pixelated" />;
 };
@@ -588,6 +698,71 @@ const OffsetReadout = ({ label, offset }: any) => (
     <div className="text-[10px] text-cyan-600 font-mono tracking-tighter bg-black px-4 py-1 border border-zinc-900 rounded">X:{Math.round(offset?.x)} Y:{Math.round(offset?.y)}</div>
   </div>
 );
+
+const FrameInput = ({ file, onUpload, onRemove, index, category }: any) => {
+  const [isLinkMode, setIsLinkMode] = useState(typeof file === 'string');
+  const[tempLink, setTempLink] = useState(typeof file === 'string' ? file : '');
+
+  const uniqueId = `file-${category}-${index}`;
+
+  return (
+    <div className="flex flex-col gap-1 bg-black border border-zinc-800 p-1.5 rounded-sm group/row hover:border-zinc-700 transition-colors">
+      <div className="flex items-center gap-2">
+        <span className="text-[7px] text-zinc-800 w-3 font-bold">#{index + 1}</span>
+        
+        {/* Preview Thumbnail */}
+        <div className="w-5 h-5 bg-zinc-900 rounded-sm flex items-center justify-center border border-zinc-800 overflow-hidden">
+           <ThumbnailPreview file={file} />
+        </div>
+
+        {/* Toggle Button */}
+        <button 
+          onClick={() => setIsLinkMode(!isLinkMode)}
+          className="text-[6px] text-zinc-500 hover:text-cyan-400 uppercase font-bold px-1 border border-zinc-900 rounded"
+        >
+          {isLinkMode ? "To File" : "To Link"}
+        </button>
+
+        {isLinkMode ? (
+          <div className="flex-1 flex gap-1">
+            <input 
+              type="text"
+              placeholder="Paste URL..."
+              className="flex-1 bg-zinc-950 border border-zinc-800 p-1 text-[8px] text-cyan-500 outline-none"
+              value={tempLink}
+              onChange={(e) => setTempLink(e.target.value)}
+            />
+            <button 
+              onClick={() => onUpload(tempLink)}
+              className="bg-cyan-900/20 text-cyan-500 px-1.5 text-[7px] font-bold uppercase border border-cyan-800/40"
+            >
+              Set
+            </button>
+          </div>
+        ) : (
+          <div className="flex-1 flex items-center justify-between overflow-hidden">
+            <label 
+              htmlFor={uniqueId} 
+              className="text-[9px] text-zinc-600 truncate cursor-pointer hover:text-zinc-300 italic"
+            >
+              {file instanceof File ? file.name : 'No binary file'}
+            </label>
+            <input 
+              type="file" 
+              id={uniqueId} 
+              className="hidden" 
+              onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} 
+            />
+          </div>
+        )}
+
+        <button onClick={onRemove} className="text-zinc-700 hover:text-red-500 transition-opacity ml-1">
+          <Trash2 size={10} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const EditorGuide = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   if (!isOpen) return null;
@@ -608,22 +783,22 @@ const EditorGuide = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">1. Select a base body</h3>
-              <p>Base body is the main sprite of your character. Currently doesn't support gifs. Align base body however you want it, keep in mind that the bottom of the black reference box is bottom of bar background. You can adjust sprite scale with an input (if needed)</p>
+              <p>Base body is the main sprite of your character. Gifs are supported. Align base body however you want it, keep in mind that the bottom of the black reference box is bottom of bar background. You can adjust sprite scale with an input (if needed)</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">2. Select mouth and eyes frames (if any)</h3>
-              <p>Upload them and align to your main body on the preview with your mouse. Engine will animate the frames from first to last automatically. Currently doesn't support gifs.</p>
+              <p>Upload them and align to your main body on the preview with your mouse. Engine will animate the frames from first to last automatically. Gifs are supported (use in the first slot).</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">3. Select additional animation frames (if any)</h3>
-              <p>Same logic like in previous section (eyes and mouth). Additional animation frames have their own configurable speed and interval (in ms). You can use them to animate for example Anna's glitches. Currently doesn't support gifs.</p>
+              <p>Same logic like in previous section (eyes and mouth). Additional animation frames have their own configurable speed and interval (in ms). You can use them to animate for example Anna's glitches. Gifs are supported (use in the first slot).</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">4. Select static animation prop (if selected additional anim. frames previously)</h3>
-              <p>Static animation prop is basically a frame that will be present when animation is not playing. You can use that for example to make an animation of Stella's ears because they stay in one frame when animation is not playing. In that case base body should be without ears at all (or animation will overlap the base body). Currently doesn't support gifs.</p>
+              <p>Static animation prop is basically a frame that will be present when animation is not playing. You can use that for example to make an animation of Stella's ears because they stay in one frame when animation is not playing. In that case base body should be without ears at all (or animation will overlap the base body). Gifs are supported.</p>
           </section>
         </div>
         <br></br>
@@ -636,22 +811,22 @@ const EditorGuide = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">1. Загрузите base body</h3>
-              <p>Base body это основной спрайт вашего персонажа. Пока что не поддерживает гифки. Поместите base body мышкой куда хотите, но учитите, что низ черной коробки это по сути низ бекграуда бара (если поставить спрайт парящим в черной коробке то он будет парить в баре тоже). Не забудьте подкорректировать размер спрайта ползунком.</p>
+              <p>Base body это основной спрайт вашего персонажа. Гифки поддерживаются. Поместите base body мышкой куда хотите, но учитите, что низ черной коробки это по сути низ бекграуда бара (если поставить спрайт парящим в черной коробке то он будет парить в баре тоже). Не забудьте подкорректировать размер спрайта ползунком.</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">2. Загрузите кадры рта и глаз (если есть)</h3>
-              <p>Необходимо для моргания и анимации при разговоре. После загрузки кадров их можно разместить мышкой на вашем base body. Учтите, что анимация проигрывает кадры прямо как они есть, поэтому если у кадров разные разрешения картинки то они могут смещаться. Пока что не поддерживает гифки.</p>
+              <p>Необходимо для моргания и анимации при разговоре. После загрузки кадров их можно разместить мышкой на вашем base body. Учтите, что анимация проигрывает кадры прямо как они есть, поэтому если у кадров разные разрешения картинки то они могут смещаться. Гифки поддерживаются (используйте первый слот кадров).</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">3. Загрузите дополнительные кадры анимации (если есть)</h3>
-              <p>Все так же, как с глазами и ртом. У доп. кадров анимации есть конфигурабельная скорость и интервал анимации (в милисекудах). Их можно использовать, например, чтобы сделать глитчи Анны. Пока что не поддерживает гифки.</p>
+              <p>Все так же, как с глазами и ртом. У доп. кадров анимации есть конфигурабельная скорость и интервал анимации (в милисекудах). Их можно использовать, например, чтобы сделать глитчи Анны. Гифки поддерживаются (используйте первый слот кадров).</p>
           </section>
 
           <section>
               <h3 className="text-zinc-100 uppercase mb-2 font-bold">4. Выберите static animation prop (Если выбраны доп. кадры анимации)</h3>
-              <p>Static animation prop это кадр, который будет представлен, если анимация сейчас не проигрывается. Это можно использовать, например, чтобы сделать анимацию ушей Стеллы (потому что пока она не проигрывается, уши стоят неподвижно в одном кадре), однако тогда base body не должен содержать в себе ушей вообще, иначе анимация будет накладываться на base body и сливаться с ним. Пока что не поддерживает гифки.</p>
+              <p>Static animation prop это кадр, который будет представлен, если анимация сейчас не проигрывается. Это можно использовать, например, чтобы сделать анимацию ушей Стеллы (потому что пока она не проигрывается, уши стоят неподвижно в одном кадре), однако тогда base body не должен содержать в себе ушей вообще, иначе анимация будет накладываться на base body и сливаться с ним. Гифки поддерживаются.</p>
           </section>
         </div>
         <br></br>

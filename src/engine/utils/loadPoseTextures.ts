@@ -1,9 +1,10 @@
 import { Assets, Texture } from 'pixi.js';
 import { db } from './db';
+import { AnimatedGIF } from '@pixi/gif';
 
-async function resolveImage(pathOrId: string): Promise<Texture> {
+async function resolveImage(pathOrId: string): Promise<Texture | any> {
     // Standart path
-    if (pathOrId.startsWith('assets/')) {
+    if (pathOrId.startsWith('assets/') || pathOrId.startsWith('http')) {
         return await Assets.load(pathOrId);
     }
 
@@ -11,6 +12,11 @@ async function resolveImage(pathOrId: string): Promise<Texture> {
     try {
         const entry = await db.images.get(pathOrId);
         if (entry && entry.data) {
+            if (entry.data.type === 'image/gif') {
+                const arrayBuffer = await (entry.data as Blob).arrayBuffer();
+                return await AnimatedGIF.fromBuffer(arrayBuffer);
+            }
+
             const dataUrl = await new Promise<string>((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result as string);
@@ -19,7 +25,6 @@ async function resolveImage(pathOrId: string): Promise<Texture> {
             });
 
             const texture = await Assets.load(dataUrl);
-            console.log(`Successfully parsed custom texture: ${pathOrId}`);
             return texture;
         }
     } catch (e) {
@@ -33,7 +38,7 @@ export async function loadPoseTextures(poseData: any) {
     const body = await resolveImage(poseData.sprites.body);
 
     const resolveAndFilter = async (list: string[]) => {
-        const results = await Promise.all((list || []).map(resolveImage));
+        const results = await Promise.all((list ||[]).map(resolveImage));
         return results.filter(t => t && t !== Texture.WHITE);
     };
 

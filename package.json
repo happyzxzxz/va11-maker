@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pixi/gif": "^3.0.1",
     "@pixi/sound": "^6.0.1",
     "@tailwindcss/vite": "^4.2.2",
     "autoprefixer": "^10.4.27",
