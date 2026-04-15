@@ -1,10 +1,14 @@
 import characterData from '../jsons/characters.json';
+import { useScriptStore } from '../../store/useScriptStore';
 
 export const getCharacterEntry = (id: string | null) => {
     if (!id) return null;
 
-    if ((characterData as any)[id]) {
-        return (characterData as any)[id];
+    const { customCharacters } = useScriptStore.getState();
+    const allCharacters = { ...characterData, ...customCharacters };
+
+    if ((allCharacters as any)[id]) {
+        return (allCharacters as any)[id];
     }
 
     const lowerId = id.toLowerCase();

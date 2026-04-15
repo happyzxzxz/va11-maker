@@ -2,22 +2,25 @@ import { Preview } from './components/Preview';
 import { useScriptStore } from './store/useScriptStore';
 import characterData from './engine/jsons/characters.json';
 import { ProjectSidebar } from './components/ProjectSidebar';
-import { Play, Copy, Plus, Trash2, Eraser, Music, Settings } from 'lucide-react'; 
+import { Play, Copy, Plus, Trash2, Eraser, Music, Settings, Activity } from 'lucide-react'; 
 import { JukeboxModal } from './components/JukeboxModal';
 import { useState } from 'react';
+import { CharacterCreator } from './components/CharacterCreator';
 
 export default function Maker() {
-  const { frames, currentIndex, addFrame, selectFrame, duplicateFrame, deleteFrame, updateCurrentFrame, isPlaying, setIsPlaying, clearAllFrames, playlist } = useScriptStore();
+  const { frames, currentIndex, addFrame, selectFrame, duplicateFrame, deleteFrame, updateCurrentFrame, isPlaying, setIsPlaying, clearAllFrames, playlist, customCharacters } = useScriptStore();
   const currentFrame = frames[currentIndex];
   const [isJukeboxOpen, setIsJukeboxOpen] = useState(false);
   const [isProjectOpen, setIsProjectOpen] = useState(false);
+  const [isCreatorOpen, setIsCreatorOpen] = useState(false);
+  const allCharacters = { ...characterData, ...customCharacters };
 
   const updateSlot = (slot: 'left' | 'center' | 'right', charId: string | null) => {
     const newCharacters = { ...currentFrame.characters };
     if (!charId || charId === 'none') {
       newCharacters[slot] = null;
     } else {
-      const firstPose = Object.keys((characterData as any)[charId].poses)[0];
+      const firstPose = Object.keys((allCharacters as any)[charId].poses)[0];
       newCharacters[slot] = { id: charId, pose: firstPose };
     }
     updateCurrentFrame({ characters: newCharacters });
@@ -42,6 +45,7 @@ export default function Maker() {
 
   return (
     <div className="flex h-screen bg-black text-zinc-300 font-mono overflow-hidden">
+      <CharacterCreator isOpen={isCreatorOpen} onClose={() => setIsCreatorOpen(false)} />
       <JukeboxModal isOpen={isJukeboxOpen} onClose={() => setIsJukeboxOpen(false)} />
       <ProjectSidebar isOpen={isProjectOpen} onClose={() => setIsProjectOpen(false)} />
 
@@ -87,11 +91,31 @@ export default function Maker() {
       {/* CENTER: Preview Area */}
       <div className={`flex-1 flex flex-col relative transition-all duration-500 ${isPlaying ? 'bg-black' : 'bg-zinc-950 p-8'}`}>
         {!isPlaying && (
+          <div className="absolute top-6 left-6 z-20 flex flex-col items-start gap-2">
+            <button 
+              onClick={() => setIsCreatorOpen(true)} // Or setIsCreatorOpen(true) depending on your state name
+              className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95"
+            >
+              <Activity size={14} /> CHARACTER LAB
+            </button>
+            <div className="text-[8px] text-zinc-700 uppercase tracking-widest ml-2">
+              Laboratory Ready // BTC-7
+            </div>
+          </div>
+        )}
+
+        {/* TOP RIGHT: Start Button */}
+        {!isPlaying && (
           <div className="absolute top-6 right-6 z-20 flex flex-col items-end gap-2">
-            <button onClick={() => setIsPlaying(true)} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-full text-xs font-bold shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-transform hover:scale-105">
+            <button 
+              onClick={() => setIsPlaying(true)}
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-full text-xs font-bold transition-all transform hover:scale-105 active:scale-95"
+            >
               <Play size={14} fill="currentColor" /> START SCRIPT
             </button>
-            <div className="text-[8px] text-zinc-700 uppercase tracking-widest mr-2">System Ready // BTC-7</div>
+            <div className="text-[8px] text-zinc-700 uppercase tracking-widest mr-2">
+              System Ready // BTC-7
+            </div>
           </div>
         )}
         
@@ -133,7 +157,7 @@ export default function Maker() {
               <label className="text-[10px] text-zinc-500 uppercase font-bold tracking-tighter">Dialogue Script</label>
               <div className="space-y-2">
                 <select value={currentFrame.speaker.id} onChange={(e) => updateCurrentFrame({ speaker: { ...currentFrame.speaker, id: e.target.value }})} className="w-full bg-zinc-900 border border-zinc-800 p-2 text-xs outline-none focus:border-pink-500">
-                  {Object.keys(characterData).map(id => (<option key={id} value={id}>{(characterData as any)[id].displayName || id}</option>))}
+                  {Object.keys(allCharacters).map(id => (<option key={id} value={id}>{(allCharacters as any)[id].displayName || id}</option>))}
                 </select>
                 <textarea value={currentFrame.speaker.text} onChange={(e) => updateCurrentFrame({ speaker: { ...currentFrame.speaker, text: e.target.value }})} className="w-full bg-zinc-900 border border-zinc-800 p-3 text-xs h-32 outline-none focus:border-pink-500 leading-relaxed resize-none" placeholder="Type dialogue..."/>
               </div>
@@ -157,7 +181,7 @@ export default function Maker() {
                       </div>
                       <select value={charInSlot?.id || 'none'} onChange={(e) => updateSlot(slot, e.target.value)} className="w-full bg-zinc-900 border border-zinc-800 p-2 text-xs outline-none focus:border-cyan-500">
                         <option value="none">--- EMPTY ---</option>
-                        {Object.keys(characterData).map(id => ((characterData as any)[id].poses && <option key={id} value={id}>{id}</option>))}
+                        {Object.keys(allCharacters).map(id => ((allCharacters as any)[id].poses && <option key={id} value={id}>{id}</option>))}
                       </select>
                       {charInSlot && (
                         <select 
@@ -166,7 +190,7 @@ export default function Maker() {
                           className="w-full bg-zinc-950 border border-zinc-800 p-2 text-[10px] text-cyan-500 outline-none"
                         >
                           {(() => {
-                            const charEntry = (characterData as any)[charInSlot.id];
+                            const charEntry = (allCharacters as any)[charInSlot.id];
                             
                             if (charEntry && charEntry.poses) {
                               return Object.keys(charEntry.poses).map(pose => (

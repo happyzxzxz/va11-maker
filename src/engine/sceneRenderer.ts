@@ -5,7 +5,8 @@ import { loadPoseTextures } from './utils/loadPoseTextures';
 import { sound } from '@pixi/sound';
 import songData from './jsons/songs.json';
 import gsap from 'gsap';
-import { getCharacterEntry } from './utils/characterLookup';
+import { useScriptStore } from '../store/useScriptStore';
+import characterData from './jsons/characters.json';
 
 
 interface Slot {
@@ -453,13 +454,23 @@ export class SceneRenderer {
     public async updateCharacters(newCharacters: { left?: any, center?: any, right?: any }) {
         if (!this.isReady) return;
 
+        const { customCharacters } = useScriptStore.getState();
+        const allCharacters = { ...characterData, ...customCharacters };
+
         const loadPromises: Promise<any>[] = [];
         const characterConfigs: any = {};
 
         for (const [_slot, data] of Object.entries(newCharacters)) {
             if (data) {
-                const charEntry = getCharacterEntry(data.id); 
+                const charEntry = (allCharacters as any)[data.id]; 
+
+                if (!charEntry) {
+                    console.error(`Character ID ${data.id} not found.`);
+                    continue; 
+                }
+
                 const pose = (charEntry as any).poses[data.pose];
+                if (!pose) continue;
                 
                 loadPromises.push(loadPoseTextures(pose).then(tex => {
                     characterConfigs[data.id] = { 
@@ -508,6 +519,12 @@ export class SceneRenderer {
             if (!data) continue;
 
             const config = characterConfigs[data.id];
+
+            if (!config) {
+                console.error(`Skipping ${data.id}: Configuration not found.`);
+                continue; 
+            }
+
             const targetX = this.slots[targetSlot].x;
             const existingChar = stageInstances[data.id];
 
@@ -532,6 +549,37 @@ export class SceneRenderer {
                 this.slots[targetSlot].char = newChar;
                 this.charLayer.addChild(newChar.view);
                 gsap.to(newChar.view, { alpha: 1, duration: 0.5, ease: "steps(4)" });
+            }
+        }
+    }
+
+    public async refreshCharacters() {
+        if (!this.isReady) return;
+        
+        const { customCharacters } = useScriptStore.getState();
+        const allCharacters = { ...characterData, ...customCharacters };
+        
+        for (const slotKey in this.slots) {
+            const slot = this.slots[slotKey as 'left' | 'center' | 'right'];
+            if (slot.char) {
+                const charId = slot.char.characterKey;
+                const stillExists = (allCharacters as any)[charId];
+                
+                if (!stillExists) {
+                    const charToRemove = slot.char;
+                    gsap.killTweensOf(charToRemove.view);
+                    gsap.to(charToRemove.view, {
+                        alpha: 0,
+                        duration: 0.3,
+                        onComplete: () => {
+                            charToRemove.destroy();
+                            if (this.charLayer.children.includes(charToRemove.view)) {
+                                this.charLayer.removeChild(charToRemove.view);
+                            }
+                        }
+                    });
+                    slot.char = null;
+                }
             }
         }
     }

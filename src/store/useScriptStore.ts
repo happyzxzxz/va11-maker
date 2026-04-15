@@ -42,6 +42,9 @@ interface ScriptState {
   loadExternalScript: (data: { frames: any[], playlist: (string | null)[] }) => void;
   renderer: any | null;
   setRenderer: (renderer: any) => void;
+  customCharacters: Record<string, any>;
+  addCustomCharacter: (charData: any) => void;
+  deleteCustomCharacter: (id: string) => void;
 }
 
 export const useScriptStore = create<ScriptState>()(
@@ -52,6 +55,7 @@ export const useScriptStore = create<ScriptState>()(
       isPlaying: false,
       renderer: null,
       setRenderer: (r) => set({ renderer: r }),
+      customCharacters: {}, 
 
       addFrame: () => set((state) => {
         const newFrame = { ...DEFAULT_FRAME, id: Math.random().toString(36).substr(2, 9) };
@@ -84,6 +88,18 @@ export const useScriptStore = create<ScriptState>()(
           newPlaylist[index] = songId;
           return { playlist: newPlaylist };
       }),
+
+      addCustomCharacter: (charData) => set((state) => ({
+          customCharacters: { 
+            ...state.customCharacters, 
+            [charData.id]: charData 
+          }
+      })),
+      deleteCustomCharacter: (id) => set((state) => {
+        const newCustom = { ...state.customCharacters };
+        delete newCustom[id];
+        return { customCharacters: newCustom };
+    }),
 
       duplicateFrame: () => set((state) => {
         const currentFrame = state.frames[state.currentIndex];
@@ -126,6 +142,7 @@ export const useScriptStore = create<ScriptState>()(
         frames: state.frames,
         playlist: state.playlist,
         currentIndex: state.currentIndex,
+        customCharacters: state.customCharacters, 
       }),
     }
   )

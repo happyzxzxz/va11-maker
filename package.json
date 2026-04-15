@@ -13,6 +13,7 @@
     "@pixi/sound": "^6.0.1",
     "@tailwindcss/vite": "^4.2.2",
     "autoprefixer": "^10.4.27",
+    "dexie": "^4.4.2",
     "gsap": "^3.14.2",
     "lucide-react": "^1.8.0",
     "pixi.js": "^8.17.1",

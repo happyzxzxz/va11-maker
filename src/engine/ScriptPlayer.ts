@@ -31,22 +31,21 @@ export class ScriptPlayer {
 
 
     private async renderFrame(frame: any) {
-        const speakerId = frame.speaker.id;
+        const speakerId = frame.speaker.id;   
+
         const speakerProfile = getCharacterEntry(speakerId);
 
-        let voiceAlias = '';
-        if (speakerProfile?.speechFile) {
-            voiceAlias = speakerProfile.speechFile;
-        };
+        const speachFile = speakerProfile?.speachfile || speakerProfile?.speechFile || '';
+        const voice = speachFile.includes('Low') ? 'speechLow' : 'speechHigh';
 
-        const displayName = speakerProfile?.displayName || speakerId || "???";
+        const displayName = speakerProfile?.displayName || speakerId || "";
         const nameColor = speakerProfile?.nameColor || "0xFFFFFF";
 
         this.renderer.prepareForNewFrame(
             frame.speaker.text, 
             displayName, 
-            nameColor, 
-            voiceAlias
+            nameColor,
+            voice
         );
 
         if (frame.background) await this.renderer.setBackground(frame.background);

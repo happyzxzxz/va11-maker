@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { SceneRenderer } from '../engine/sceneRenderer';
 import { useScriptStore } from '../store/useScriptStore';
-import characterData from '../engine/jsons/characters.json';
 import { ScriptPlayer } from '../engine/ScriptPlayer';
 import { GameController } from '../engine/gameController';
+import { getCharacterEntry } from '../engine/utils/characterLookup';
 
 export const Preview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<SceneRenderer | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const { frames, currentIndex, isPlaying, setIsPlaying, playlist, setRenderer } = useScriptStore();
+  const { frames, currentIndex, isPlaying, setIsPlaying, playlist, setRenderer, customCharacters } = useScriptStore();
 
   useEffect(() => {
     let isMounted = true;
@@ -69,7 +69,7 @@ export const Preview = () => {
       renderer.stopMusic();
 
       const frame = frames[currentIndex];
-      const speakerProfile = (characterData as any)[frame.speaker.id];
+      const speakerProfile = getCharacterEntry(frame.speaker.id);
       
       renderer.setBackground(frame.background);
       renderer.updateCharacters(frame.characters);
@@ -107,7 +107,7 @@ export const Preview = () => {
     else {
       renderer.stopMusic();
     }
-  }, [frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying]);
+  }, [frames, currentIndex, loaded, isPlaying, playlist, setIsPlaying, customCharacters]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -120,6 +120,13 @@ export const Preview = () => {
     
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isPlaying, setIsPlaying]);
+
+  useEffect(() => {
+    const renderer = rendererRef.current;
+    if (!renderer || !loaded) return;
+
+    renderer.refreshCharacters();
+  }, [customCharacters, loaded]);
 
   return (
     <div className={`relative bg-black flex items-center justify-center transition-all duration-500 ${
