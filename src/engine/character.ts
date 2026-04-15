@@ -263,7 +263,6 @@ export class Character {
             }
         } 
         
-        this.view.x = options.x;
         this.view.scale.set(options.scale);
     }
 
