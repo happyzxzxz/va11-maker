@@ -425,7 +425,7 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
                       <label className="text-[8px] text-zinc-500 uppercase font-bold tracking-tighter">Render Scale</label>
                       <span className="text-[10px] text-cyan-500 font-mono font-bold">{baseScale.toFixed(2)}x</span>
                   </div>
-                  <input type="range" min="0.5" max="4.0" step="0.01" value={baseScale} onChange={e => setBaseScale(parseFloat(e.target.value))} className="w-full accent-pink-600 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
+                  <input type="range" min="0.05" max="10.0" step="0.01" value={baseScale} onChange={e => setBaseScale(parseFloat(e.target.value))} className="w-full accent-pink-600 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
                </div>
                <div className="grid grid-cols-2 gap-3 mt-2">
                  <div>
@@ -601,7 +601,63 @@ const EditorGuide = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
         <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white"><X size={20}/></button>
         
         <h2 className="text-amber-500 text-sm font-bold tracking-[0.3em] uppercase mb-6 border-b border-amber-900/30 pb-2">
-          Everything you do here is local only!
+          How to create my character (eng)
+        </h2>
+
+        <div className="space-y-6 text-xs leading-relaxed text-zinc-400">
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">1. Select a base body</h3>
+              <p>Base body is the main sprite of your character. Currently doesn't support gifs. Align base body however you want it, keep in mind that the bottom of the black reference box is bottom of bar background. You can adjust sprite scale with an input (if needed)</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">2. Select mouth and eyes frames (if any)</h3>
+              <p>Upload them and align to your main body on the preview with your mouse. Engine will animate the frames from first to last automatically. Currently doesn't support gifs.</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">3. Select additional animation frames (if any)</h3>
+              <p>Same logic like in previous section (eyes and mouth). Additional animation frames have their own configurable speed and interval (in ms). You can use them to animate for example Anna's glitches. Currently doesn't support gifs.</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">4. Select static animation prop (if selected additional anim. frames previously)</h3>
+              <p>Static animation prop is basically a frame that will be present when animation is not playing. You can use that for example to make an animation of Stella's ears because they stay in one frame when animation is not playing. In that case base body should be without ears at all (or animation will overlap the base body). Currently doesn't support gifs.</p>
+          </section>
+        </div>
+        <br></br>
+
+        <h2 className="text-amber-500 text-sm font-bold tracking-[0.3em] uppercase mb-6 border-b border-amber-900/30 pb-2">
+          Как создать персонажа (ru)
+        </h2>
+
+        <div className="space-y-6 text-xs leading-relaxed text-zinc-400">
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">1. Загрузите base body</h3>
+              <p>Base body это основной спрайт вашего персонажа. Пока что не поддерживает гифки. Поместите base body мышкой куда хотите, но учитите, что низ черной коробки это по сути низ бекграуда бара (если поставить спрайт парящим в черной коробке то он будет парить в баре тоже). Не забудьте подкорректировать размер спрайта ползунком.</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">2. Загрузите кадры рта и глаз (если есть)</h3>
+              <p>Необходимо для моргания и анимации при разговоре. После загрузки кадров их можно разместить мышкой на вашем base body. Учтите, что анимация проигрывает кадры прямо как они есть, поэтому если у кадров разные разрешения картинки то они могут смещаться. Пока что не поддерживает гифки.</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">3. Загрузите дополнительные кадры анимации (если есть)</h3>
+              <p>Все так же, как с глазами и ртом. У доп. кадров анимации есть конфигурабельная скорость и интервал анимации (в милисекудах). Их можно использовать, например, чтобы сделать глитчи Анны. Пока что не поддерживает гифки.</p>
+          </section>
+
+          <section>
+              <h3 className="text-zinc-100 uppercase mb-2 font-bold">4. Выберите static animation prop (Если выбраны доп. кадры анимации)</h3>
+              <p>Static animation prop это кадр, который будет представлен, если анимация сейчас не проигрывается. Это можно использовать, например, чтобы сделать анимацию ушей Стеллы (потому что пока она не проигрывается, уши стоят неподвижно в одном кадре), однако тогда base body не должен содержать в себе ушей вообще, иначе анимация будет накладываться на base body и сливаться с ним. Пока что не поддерживает гифки.</p>
+          </section>
+        </div>
+        <br></br>
+
+        <h2 className="text-amber-500 text-sm font-bold tracking-[0.3em] uppercase mb-6 border-b border-amber-900/30 pb-2">
+          General Information
         </h2>
 
         <div className="space-y-6 text-xs leading-relaxed text-zinc-400">
@@ -637,8 +693,8 @@ const EditorGuide = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
           <section>
             <h3 className="text-zinc-100 uppercase mb-2 font-bold text-red-500">6. Things can break</h3>
           </section>
+          <br></br>
         </div>
-
         <div className="mt-8 pt-4 border-t border-zinc-900 text-center">
           <button onClick={onClose} className="text-[10px] text-amber-500 uppercase border border-amber-900/50 px-6 py-2 hover:bg-amber-900/20">
             Acknowledge
