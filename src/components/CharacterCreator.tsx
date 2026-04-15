@@ -460,10 +460,10 @@ export const CharacterCreator = ({ isOpen, onClose }: { isOpen: boolean, onClose
                         <DynamicList title="ANIMATION" list={pose.sprites.characterAnim} onAdd={() => addFrameRow(pIdx, 'characterAnim')} onUpload={(file: File, index: number) => handleFileUpload(pIdx, 'characterAnim', file, index)} onRemove={(i: number) => removeFrameRow(pIdx, 'characterAnim', i)} />
                       </div>
                       <div className="pt-4 border-t border-zinc-800 grid grid-cols-2 gap-4">
-                        <Input label="Optional Animation Speed (not applies to eyes or mouth)" type="number" step="0.01" value={pose.animSpeed} onChange={v => {const n=[...poses]; n[pIdx].animSpeed=parseFloat(v) || 0.12; setPoses(n)}} />
+                        <Input label="Optional Animation Speed (not applies to eyes or mouth)" type="number" step="0.01" value={pose.animSpeed} onChange={(v: string) => {const n=[...poses]; n[pIdx].animSpeed=parseFloat(v) || 0.12; setPoses(n)}} />
                         <div className="flex gap-2">
-                          <Input label="Animation intrvl min, ms" type="number" value={pose.animInterval.min} onChange={v => {const n=[...poses]; n[pIdx].animInterval.min=parseInt(v) || 0; setPoses(n)}} />
-                          <Input label="Animation intrvl max, ms" type="number" value={pose.animInterval.max} onChange={v => {const n=[...poses]; n[pIdx].animInterval.max=parseInt(v) || 0; setPoses(n)}} />
+                          <Input label="Animation intrvl min, ms" type="number" value={pose.animInterval.min} onChange={(v: string) => {const n=[...poses]; n[pIdx].animInterval.min=parseInt(v) || 0; setPoses(n)}} />
+                          <Input label="Animation intrvl max, ms" type="number" value={pose.animInterval.max} onChange={(v: string) => {const n=[...poses]; n[pIdx].animInterval.max=parseInt(v) || 0; setPoses(n)}} />
                         </div>
                       </div>
                     </div>
