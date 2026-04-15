@@ -20,23 +20,6 @@ export default function Maker() {
     id => (allCharacters as any)[id]?.poses && Object.keys((allCharacters as any)[id].poses).length > 0
   );
 
-  const updatePose = (slot: 'left' | 'center' | 'right', pose: string) => {
-    const newCharacters = { ...currentFrame.characters };
-    if (newCharacters[slot]) {
-      newCharacters[slot] = { ...newCharacters[slot]!, pose };
-    }
-    updateCurrentFrame({ characters: newCharacters });
-  };
-
-  const toggleSpeaking = (slot: 'left' | 'center' | 'right', isSpeaking: boolean) => {
-    updateCurrentFrame({
-      speaker: {
-        ...currentFrame.speaker,
-        mouthTarget: isSpeaking ? slot : null
-      }
-    });
-  };
-
   const addCharacterToSlot = (slot: 'left' | 'center' | 'right') => {
     const newCharacters = { ...currentFrame.characters };
     const firstId = validCharacterKeys[0];

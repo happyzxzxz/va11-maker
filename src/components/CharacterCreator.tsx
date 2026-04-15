@@ -22,7 +22,7 @@ interface PoseData {
 }
 
 
-function usePreviewUrl(file: File | null) {
+function usePreviewUrl(file: File | string | null) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
     if (!file) { setUrl(null); return; }
