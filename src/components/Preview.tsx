@@ -8,7 +8,7 @@ import { getCharacterEntry } from '../engine/utils/characterLookup';
 export const Preview = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<SceneRenderer | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  const[loaded, setLoaded] = useState(false);
   const { frames, currentIndex, isPlaying, setIsPlaying, playlist, setRenderer, customCharacters } = useScriptStore();
 
   useEffect(() => {
@@ -63,7 +63,6 @@ export const Preview = () => {
     const renderer = rendererRef.current;
     if (!renderer || !loaded) return;
 
-    // 1. If we are NOT playing, use the Editor logic (Instant updates)
     if (!isPlaying) {
       renderer.stopMusic();
 
@@ -79,7 +78,6 @@ export const Preview = () => {
       );
     }
 
-    // 2. If we ARE playing, we let ScriptPlayer take the wheel
     if (isPlaying) {
       const activeSongs = playlist.filter((id): id is string => id !== null);
       renderer.startPlaylist(activeSongs);
@@ -118,7 +116,7 @@ export const Preview = () => {
     }
     
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isPlaying, setIsPlaying]);
+  },[isPlaying, setIsPlaying]);
 
   return (
     <div className={`relative bg-black flex items-center justify-center transition-all duration-500 ${

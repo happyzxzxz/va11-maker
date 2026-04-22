@@ -14,8 +14,7 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
 
     const usedIds = new Set<string>();
     
-    frames.forEach(frame => {
-        ['left', 'center', 'right'].forEach(slot => {
+    frames.forEach(frame => {['left', 'center', 'right'].forEach(slot => {
             const slotChars = frame.characters[slot as 'left' | 'center' | 'right'];
             if (Array.isArray(slotChars)) {
                 slotChars.forEach(c => {
@@ -88,7 +87,9 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
       onClose();
 
       await new Promise(r => setTimeout(r, 500));
-      renderer.resize(1366, 768);
+      
+      renderer.isRecording = true;
+      renderer.resize();
 
       const audioStream = renderer.getAudioStream();
       const recorder = new VideoRecorder(renderer.app!.canvas, audioStream);
@@ -103,6 +104,7 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
       await player.playForRecording(async () => {
           const videoBlob = await recorder.stop();
           renderer.stopMusic();
+          renderer.isRecording = false; // Turn off forced framerate
           
           renderer.resize(window.innerWidth, window.innerHeight);
           setIsPlaying(false);
@@ -117,7 +119,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
   };
 
   const handleImportClick = () => {
-    // Trigger the hidden file input
     fileInputRef.current?.click();
   };
 
@@ -132,7 +133,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
         
         if (window.confirm("Importing will overwrite current data. Continue?")) {
           
-          // A. UNPACK ASSETS (Base64 -> IndexedDB)
           if (json.assets) {
             const unpackPromises = Object.entries(json.assets).map(async ([id, base64]) => {
               const res = await fetch(base64 as string);
@@ -143,7 +143,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
             console.log("Assets unpacked.");
           }
 
-          // B. REGISTER CUSTOM CHARACTERS
           if (json.customCharacters) {
             const currentCustom = useScriptStore.getState().customCharacters;
             useScriptStore.setState({ 
@@ -151,7 +150,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
             });
           }
 
-          // C. LOAD SCRIPT
           loadExternalScript(json);
           onClose();
         }
@@ -179,7 +177,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
         </div>
 
         <div className="p-6 space-y-4">
-          {/* Hidden input */}
           <input 
             type="file" 
             ref={fileInputRef} 
@@ -201,7 +198,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
             </div>
           </button>
 
-          {/* Import button */}
           <button 
             onClick={handleImportClick}
             className="w-full group flex items-center gap-4 p-4 border border-zinc-800 bg-zinc-900/30 hover:border-green-500/50 hover:bg-green-500/5 transition-all text-left"
@@ -227,7 +223,6 @@ export const ProjectSidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: 
             </div>
           </button>
 
-          {/* Metadata & Footer */}
           <div className="pt-6 border-t border-zinc-900">
              <div className="text-[9px] text-zinc-600 uppercase">Current Session Info</div>
              <div className="mt-2 text-[10px] flex justify-between">

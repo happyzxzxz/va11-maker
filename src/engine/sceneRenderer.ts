@@ -48,6 +48,9 @@ export class SceneRenderer {
     private customCursor!: AnimatedSprite;
 
     public isReady: boolean = false;
+    public isRecording: boolean = false;
+    private cfrFixer!: Graphics;
+
     private isShuffling: boolean = false;
     private isLooping: boolean = false;
     private isOverDialogue: boolean = false;
@@ -162,6 +165,14 @@ export class SceneRenderer {
         this.setupLoadMenu(); 
         this.setupJukeboxButton();
         this.setupJukeboxPlayer();
+
+        // Initialize the invisible Constant Frame Rate fixer
+        this.cfrFixer = new Graphics()
+            .rect(0, 0, 1, 1)
+            .fill({ color: 0x000000 });
+        this.cfrFixer.alpha = 0.01;
+        this.app!.stage.addChild(this.cfrFixer);
+
         this.isReady = true;
 
         this.app!.canvas.style.cursor = this.app.renderer.events.cursorStyles.va11;
@@ -271,6 +282,13 @@ export class SceneRenderer {
     }
 
     private update(delta: number) {
+
+        // If recording, oscillate the alpha of the invisible graphic 
+        // to force Chromium to output a frame to the WebM encoder.
+        if (this.isRecording && this.cfrFixer) {
+            this.cfrFixer.alpha = this.cfrFixer.alpha === 0.01 ? 0.011 : 0.01;
+        }
+
         if (!this.typingActive || !this.isTyping) return;
 
         const msPassed = delta * (1000 / 60);
@@ -550,7 +568,6 @@ export class SceneRenderer {
                 let charInstance = stageInstances.get(charData.id);
 
                 if (charInstance) {
-                    // already on screen
                     this.slots[slotKey].instances.push(charInstance);
                     
                     gsap.killTweensOf(charInstance.view);
@@ -568,7 +585,6 @@ export class SceneRenderer {
                         ease: "power2.out"
                     });
                 } else {
-                    // new entry
                     const newChar = new Character(charData.id, config.textures, config.offsets, {
                         x: targetX,
                         scale: config.scale,
@@ -592,13 +608,20 @@ export class SceneRenderer {
     public resize(width?: number, height?: number) {
         if (!this.app) return;
 
+        if (this.isRecording) {
+            this.app.renderer.resize(1360, 768);
+
+            this.mainContainer.scale.set(1);
+            this.mainContainer.x = -3;
+            this.mainContainer.y = 0;
+            return;
+        }
+
         const targetWidth = width || window.innerWidth;
         const targetHeight = height || window.innerHeight;
 
-        // Resize the actual renderer canvas to the CONTAINER size
         this.app.renderer.resize(targetWidth, targetHeight);
 
-        // Calculate scale to fit the 1366x768 game inside the CONTAINER
         const scale = Math.min(
             targetWidth / this.GAME_WIDTH, 
             targetHeight / this.GAME_HEIGHT
@@ -606,7 +629,6 @@ export class SceneRenderer {
 
         this.mainContainer.scale.set(scale);
 
-        // Center the game inside the CONTAINER
         this.mainContainer.x = (targetWidth - this.GAME_WIDTH * scale) / 2;
         this.mainContainer.y = (targetHeight - this.GAME_HEIGHT * scale) / 2;
     }
